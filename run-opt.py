@@ -3,7 +3,7 @@ import torch
 
 device = "cuda"
 
-name = "facebook/opt-13b"
+name = "facebook/opt-30b"
 model_8bit = AutoModelForCausalLM.from_pretrained(name, device_map="auto", load_in_8bit=True)
 tokenizer = AutoTokenizer.from_pretrained(name)
 
