@@ -221,7 +221,7 @@ def main():
             #output = model(batch["input_ids"], output_norms=True)
             #norm_attentions = output.norm_attentions
             inputs = batch["input_ids"].to(args.device)
-            output = model(inputs, output_norms=True)
+            output = model(inputs, output_norms=False)
             torch.save(output.norm_attentions, "norm_attentions")
             # next_pred_word_ids = output.logits[:,-1,:].argmax(dim=-1)
 
