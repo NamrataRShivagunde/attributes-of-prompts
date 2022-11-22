@@ -222,7 +222,7 @@ def main():
             #norm_attentions = output.norm_attentions
             inputs = batch["input_ids"].to(args.device)
             output = model(inputs, output_norms=False)
-            torch.save(output.norm_attentions, "norm_attentions")
+            #torch.save(output.norm_attentions, "norm_attentions")
             # next_pred_word_ids = output.logits[:,-1,:].argmax(dim=-1)
 
             prob = {}
@@ -260,7 +260,7 @@ def main():
         print(correct)
         print(dev_set_len)
         
-        torch.save(output.norm_attentions, "norm_attentions")
+        #torch.save(output.norm_attentions, "norm_attentions")
             # write eaxct match prediction
 
             # saved norm attentions
