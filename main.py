@@ -159,6 +159,7 @@ def main():
     modelname = args.modelname
     # model = AutoModelForCausalLM.from_pretrained(modelname, device_map="auto", load_in_8bit=True).to(device)
     model = AutoModelForCausalLM.from_pretrained(modelname,  device_map="auto", load_in_8bit=True).to(args.device)
+    # model = AutoModelForCausalLM.from_pretrained(modelname).to(args.device)
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
     data_temp['tokenizer'] = tokenizer
 
@@ -168,7 +169,7 @@ def main():
     # templates = pd.read_csv("templates.xlsx")
     # print(templates)
 
-    with open('templatescsv.csv',encoding = 'unicode_escape') as p_file:
+    with open('templatescsv.csv') as p_file:
         reader = csv.DictReader(p_file)
         for row in reader:
             if row['template_name'] == args.templatename:
@@ -178,7 +179,7 @@ def main():
                 data_temp['demo_template'] = row['template-demo']
                 data_temp['query_template'] = row['template-query'] # this is same as demo_tempalte without the label placeholder
                 data_temp['targets'] = row['target'] # label names
-    
+    print(data_temp)
     # get dataset
     train_set = datasets.load_dataset('super_glue', dataset_name, split='train') # to get few shot in-context examples
     dev_set = datasets.load_dataset('super_glue', dataset_name, split='validation') # to evaluate 
