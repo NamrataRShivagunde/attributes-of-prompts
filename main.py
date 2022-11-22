@@ -264,12 +264,12 @@ def main():
 
         text = "Generate 20 most frequent words known to OPT"
         
-        def generate_from_model(model, tokenizer, max_new_tokens):
-            encoded_input = tokenizer(text, return_tensors='pt')
-            output_sequences = model.generate(input_ids=encoded_input['input_ids'].cuda(), max_new_tokens=max_new_tokens)
-            return tokenizer.decode(output_sequences[0], skip_special_tokens=True)
+      
+        encoded_input = tokenizer(text, return_tensors='pt')
+        output_sequences = model.generate(input_ids=encoded_input['input_ids'].cuda(), max_new_tokens=100)
+        print(tokenizer.decode(output_sequences[0], skip_special_tokens=True))
 
-        generate_from_model(model, tokenizer, max_new_tokens = 100)
+    
                     #torch.save(output.norm_attentions, "norm_attentions")
             # write eaxct match prediction
 
