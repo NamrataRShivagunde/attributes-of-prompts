@@ -117,11 +117,8 @@ class NLI():
 
         # change label id to its word equivalent
         class_id_to_label = self.label_mapping()
-        print(label)
-        print(type(label))
-        print(class_id_to_label)
         label_word = class_id_to_label[int(label)]
-        print(label_word)
+     
         
         dp = template.replace('{premise}', premise) # dp is datapoint
         dp = dp.replace('{hypothesis}', hypothesis) # filled template
@@ -135,10 +132,8 @@ class NLI():
         return dp
 
     def label_mapping(self):
-        print("hihihi")
         if self.task == 'rte':
             LM_targets = self.targets.split(';')
-            print("---------",LM_targets)
             self.class_id_to_label = {
                     0: LM_targets[0],  # entailment
                     1: LM_targets[1]}  # non-entailment
@@ -184,13 +179,10 @@ def main():
                 data_temp['query_template'] = row['template-query'] # this is same as demo_tempalte without the label placeholder
                 data_temp['targets'] = row['target'] # label names
     
-    print(data_temp)
-
     # get dataset
     train_set = datasets.load_dataset('super_glue', dataset_name, split='train') # to get few shot in-context examples
     dev_set = datasets.load_dataset('super_glue', dataset_name, split='validation') # to evaluate 
     dev_set_len = len(dev_set)
-    print(dev_set_len)
     # prepare data 
     nli_train_set = NLI(data_temp, train_set) # self.data in NLI class train set 
 
@@ -255,8 +247,6 @@ def main():
             for i in range(len(batch.input_ids)):
                 label = tokenizer.decode(batch['target_input_ids'][0][1])
                 label_mapping = nli_dev_set.label_mapping()
-                print(label)
-                print(type(label))
                 label = label_mapping[int(label)]
 
                 if prob[target_words[0]][i].item() >= prob[target_words[1]][i].item(): 
