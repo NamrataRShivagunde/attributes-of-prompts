@@ -262,7 +262,7 @@ def main():
         # print(correct)
         # print(dev_set_len)
 
-        text = "Generate 20 most frequent words known to OPT"
+        text = "Generate most frequent words known to OPT"
         
       
         encoded_input = tokenizer(text, return_tensors='pt')
