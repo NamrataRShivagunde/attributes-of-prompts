@@ -213,61 +213,61 @@ def main():
     # Evaluation loop
     model.eval()
     with torch.no_grad():
-        # for step, batch in enumerate(dev_dataloader):
-        #     # argmax P(y/x)
-        #     # multitoken labels, token prob are multiplied
-        #     target_words = data_temp['targets']
-        #     target_words = target_words.split(';') # list of target words e.g. ['entailment', 'non-entailment'] e.g.[yes, no]
+        for step, batch in enumerate(dev_dataloader):
+            # argmax P(y/x)
+            # multitoken labels, token prob are multiplied
+            target_words = data_temp['targets']
+            target_words = target_words.split(';') # list of target words e.g. ['entailment', 'non-entailment'] e.g.[yes, no]
 
-        #     #output = model(batch["input_ids"], output_norms=True)
-        #     #norm_attentions = output.norm_attentions
-        #     inputs = batch["input_ids"].to(args.device)
-        #     output = model(inputs)
-        #     # output = model(inputs, output_norms=False)
-        #     #torch.save(output.norm_attentions, "norm_attentions")
-        #     # next_pred_word_ids = output.logits[:,-1,:].argmax(dim=-1)
+            #output = model(batch["input_ids"], output_norms=True)
+            #norm_attentions = output.norm_attentions
+            inputs = batch["input_ids"].to(args.device)
+            output = model(inputs)
+            # output = model(inputs, output_norms=False)
+            #torch.save(output.norm_attentions, "norm_attentions")
+            # next_pred_word_ids = output.logits[:,-1,:].argmax(dim=-1)
 
-        #     prob = {}
-        #     # get log prob for first token of all target words e.g. 'ent' and 'non'
-        #     i=0
-        #     for target_word in target_words:
-        #         target_work_tok = tokenizer(target_word)
+            prob = {}
+            # get log prob for first token of all target words e.g. 'ent' and 'non'
+            i=0
+            for target_word in target_words:
+                target_work_tok = tokenizer(target_word)
 
-        #         first_id = target_work_tok.input_ids[1]  # pick first input if after </s> and get prob of that
-        #         prob[target_words[i]] = output.logits[:,-1,first_id] # logp of 'ent' and 'non'
-        #         i+=1
+                first_id = target_work_tok.input_ids[1]  # pick first input if after </s> and get prob of that
+                prob[target_words[i]] = output.logits[:,-1,first_id] # logp of 'ent' and 'non'
+                i+=1
 
-        #     # create files and folders
-        #     # if not os.path.exists('result/{}/seed{}/predictions.txt'.format(args.templatename, seed)):
-        #     #     os.mkdir('result/{}/seed{}/predictions.txt'.format(args.templatename, seed))
+            # create files and folders
+            # if not os.path.exists('result/{}/seed{}/predictions.txt'.format(args.templatename, seed)):
+            #     os.mkdir('result/{}/seed{}/predictions.txt'.format(args.templatename, seed))
 
 
-        #     # write the P(y/x) prediction - supports single token
+            # write the P(y/x) prediction - supports single token
            
-        #     for i in range(len(batch.input_ids)):
-        #         label = tokenizer.decode(batch['target_input_ids'][0][1])
-        #         label_mapping = nli_dev_set.label_mapping()
-        #         label = label_mapping[int(label)]
+            for i in range(len(batch.input_ids)):
+                label = tokenizer.decode(batch['target_input_ids'][0][1])
+                label_mapping = nli_dev_set.label_mapping()
+                label = label_mapping[int(label)]
 
-        #         if prob[target_words[0]][i].item() >= prob[target_words[1]][i].item(): 
-        #             pred = target_words[0]
-        #             file.writelines([target_words[0],"\n"])
-        #         else:
-        #             pred = target_words[1]
-        #             file.writelines([target_words[1],"\n"])
-        #         if label == pred:
-        #             correct+=1
+                if prob[target_words[0]][i].item() >= prob[target_words[1]][i].item(): 
+                    pred = target_words[0]
+                    file.writelines([target_words[0],"\n"])
+                else:
+                    pred = target_words[1]
+                    file.writelines([target_words[1],"\n"])
+                if label == pred:
+                    correct+=1
             
-        # print("accuarcy = ", correct/dev_set_len)
-        # print(correct)
-        # print(dev_set_len)
+        print("accuarcy = ", correct/dev_set_len)
+        print(correct)
+        print(dev_set_len)
 
-        text = "Generate most frequent words known to OPT"
+        # text = "Generate most frequent words known to OPT"
         
       
-        encoded_input = tokenizer(text, return_tensors='pt')
-        output_sequences = model.generate(input_ids=encoded_input['input_ids'].cuda(), max_new_tokens=100)
-        print(tokenizer.decode(output_sequences[0], skip_special_tokens=True))
+        # encoded_input = tokenizer(text, return_tensors='pt')
+        # output_sequences = model.generate(input_ids=encoded_input['input_ids'].cuda(), max_new_tokens=100)
+        # print(tokenizer.decode(output_sequences[0], skip_special_tokens=True))
 
     
                     #torch.save(output.norm_attentions, "norm_attentions")

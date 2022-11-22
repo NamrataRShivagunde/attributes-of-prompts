@@ -7,3 +7,8 @@ rte,rte_yesno_l,"Find if the Hypothesis entails or not entails the Premise. If t
 rte,rte_yesno_xl,"Find if the Hypothesis entails or not entails the Premise. If the Hypothesis entails the Premise then the Label is 'yes', if not then the Label is 'no'.  To understand it more clearly, let us define entailment. Entailment is used in natural language to refer to the relationship between two sentences. The relationship is a logical one, and it is a relationship between two sentences that are logically related. Therefore if the Hypothesis and Premise are related and the hypothesis follows the premise then we say the label is yes otherwise the label is no. ",Premise:{premise}\nHypothesis:{hypothesis}\nLabel:{label},Premise:{premise}\nHypothesis:{hypothesis}\nLabel:,yes;no
 rte,rte_yesno_none_vs,None None None.,Premise:{premise}\nHypothesis:{hypothesis}\nLabel:{label},Premise:{premise}\nHypothesis:{hypothesis}\nLabel:,yes;no
 rte,rte_yesno_none_s,None None None None None None None None None None.,Premise:{premise}\nHypothesis:{hypothesis}\nLabel:{label},Premise:{premise}\nHypothesis:{hypothesis}\nLabel:,yes;no
+,rte_yesno_ran_vs,Apple fruits plants,,,
+,rte_yesno_ran_s,,,,
+,rte_yesno_ran_m,,,,
+,rte_yesno_ran_l,,,,
+,rte_yesno_ran_xl,,,,
