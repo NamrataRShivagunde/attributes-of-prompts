@@ -1,0 +1,12 @@
+jupyterlab
+matplotlib
+mosestokenizer==1.1.0
+numpy
+pandas
+scipy
+seaborn
+sentencepiece
+IProgress
+tqdm
+-e ../fairseq
+-e ../transformers

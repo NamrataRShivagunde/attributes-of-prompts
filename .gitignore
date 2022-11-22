@@ -1,4 +1,10 @@
-venv-att-prompts/
+venv-attr-prompts/
+emnlp2020/fairseq/
+emnlp2020/exp2_nmt
+emnlp2020/exp1_bert
+emnlp2020/venv-norm
+emnlp2020/changed_fairseq_usage.ipynb
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

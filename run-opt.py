@@ -1,7 +1,14 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig
+from accelerate import infer_auto_device_map, init_empty_weights
 import torch
 
 device = "cuda"
+
+config = AutoConfig.from_pretrained("facebook/opt-30b")
+with init_empty_weights():
+    model = AutoModelForCausalLM.from_config(config)
+
+#device_map = infer_auto_device_map(model)
 
 device_map = {
  'model.decoder.embed_tokens': 0,
