@@ -168,7 +168,7 @@ def main():
     # templates = pd.read_csv("templates.xlsx")
     # print(templates)
 
-    with open('templatescsv.csv') as p_file:
+    with open('templatescsv.csv',encoding = 'unicode_escape') as p_file:
         reader = csv.DictReader(p_file)
         for row in reader:
             if row['template_name'] == args.templatename:
