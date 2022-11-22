@@ -157,7 +157,7 @@ def main():
     modelname = args.modelname
     # model = AutoModelForCausalLM.from_pretrained(modelname, device_map="auto", load_in_8bit=True).to(device)
     model = AutoModelForCausalLM.from_pretrained(modelname).to(args.device)
-    tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
+    tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt",  device_map="auto", load_in_8bit=True)
     data_temp['tokenizer'] = tokenizer
 
     file = open('result/rte_base_yes_no/seed1/predictions.txt', 'w')
