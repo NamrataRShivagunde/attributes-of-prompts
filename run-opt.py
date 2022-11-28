@@ -13,7 +13,7 @@ with init_empty_weights():
 device_map = {
  'model.decoder.embed_tokens': 0,
  'model.decoder.embed_positions': 0,
- 'model.decoder.final_layer_norm': 1,
+ 'model.decoder.final_layer_norm': 0,
  'model.decoder.layers.0': 0,
  'model.decoder.layers.1': 0,
  'model.decoder.layers.2': 0,
@@ -66,7 +66,7 @@ device_map = {
 }
 
 name = "facebook/opt-13b"
-model_8bit = AutoModelForCausalLM.from_pretrained(name, device_map="auto", load_in_8bit=True)
+model_8bit = AutoModelForCausalLM.from_pretrained(name, device_map=device_map, load_in_8bit=True)
 tokenizer = AutoTokenizer.from_pretrained(name)
 model_8bit.eval()
 
@@ -77,7 +77,8 @@ text3 = "Premise: Britain said, Friday, that it has barred cleric, Omar Bakri, f
 def generate_from_model(model, tokenizer, max_new_tokens):
   encoded_input = tokenizer(text2, return_tensors='pt')
   model = model.to(device)
-  output_sequences = model.generate(input_ids=encoded_input['input_ids'].to(device), max_new_tokens=max_new_tokens)
+  input_ids = encoded_input['input_ids'].to(device)
+  output_sequences = model.generate(input_ids=input_ids, max_new_tokens=max_new_tokens)
   return tokenizer.decode(output_sequences[0], skip_special_tokens=True)
 
 with torch.no_grad():
