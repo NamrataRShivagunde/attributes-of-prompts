@@ -61,31 +61,18 @@ device_map = {
  'lm_head': 1,
 }
 
-# initialize the model
-checkpoint = "facebook/opt-30b"
-config = AutoConfig.from_pretrained(checkpoint)
 
-with init_empty_weights():
-    model = AutoModelForCausalLM.from_config(config)
-
-# load the model
-model = load_checkpoint_and_dispatch(
-    model, "sharded-gpt-j-6B", device_map="auto", no_split_module_classes=["GPTJBlock"],  load_in_8bit=True
+name = "facebook/opt-30b"
+model = AutoModelForCausalLM.from_pretrained(
+    'facebook/opt-66b',
+    device_map='auto',
+    offload_folder='offload_folder',
+    torch_dtype=torch.float16,
+    offload_state_dict=True,
 )
-tokenizer = AutoTokenizer.from_pretrained(checkpoint)
+tokenizer = AutoTokenizer.from_pretrained(name, return_tensors = "pt")
 model.eval()
 
-# name = "facebook/opt-30b"
-# model = AutoModelForCausalLM.from_pretrained(name, device_map="auto", load_in_8bit=True)
-# tokenizer = AutoTokenizer.from_pretrained(name)
-# model.eval()
-
-# checkpoint = "facebook/opt-13b"
-# model = AutoModelForCausalLM.from_pretrained(
-#     checkpoint, device_map="auto", offload_folder="offload", offload_state_dict = True, torch_dtype=torch.float16
-# )
-# tokenizer = AutoTokenizer.from_pretrained(checkpoint)
-# model.eval()
 
 text = "Premise === Britain said, Friday, that it has barred cleric, Omar Bakri, from returning to the country from Lebanon, where he was released by police after being detained for 24 hours \n Hypothesis === Bakri was briefly detained, but was released \n  Answer === Entailmen \n The current format presents a 'Premise', 'Hypothesis', and an 'Answer'.  How should I present this to OPT so that it is easy for OPT to answer correctly?"
 text2 = "Premise: Britain said, Friday, that it has barred cleric, Omar Bakri, from returning to the country from Lebanon, where he was released by police after being detained for 24 hours \n Hypothesis: Bakri was briefly detained, but was released \n Answer: Entailment. What is meant by entailment and non-entailment task for OPT?"
