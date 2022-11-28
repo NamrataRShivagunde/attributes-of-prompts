@@ -62,20 +62,23 @@ device_map = {
 }
 
 # initialize the model
-# checkpoint = "facebook/opt-30b"
-# config = AutoConfig.from_pretrained(checkpoint)
+checkpoint = "facebook/opt-30b"
+config = AutoConfig.from_pretrained(checkpoint)
 
-# with init_empty_weights():
-#     model = AutoModelForCausalLM.from_config(config)
+with init_empty_weights():
+    model = AutoModelForCausalLM.from_config(config)
 
-# # load the model
-# model = load_checkpoint_and_dispatch(
-#     model, "sharded-gpt-j-6B", device_map="auto", no_split_module_classes=["GPTJBlock"]
-# )
-name = "facebook/opt-30b"
-model = AutoModelForCausalLM.from_pretrained(name, device_map="auto", load_in_8bit=True)
-tokenizer = AutoTokenizer.from_pretrained(name)
+# load the model
+model = load_checkpoint_and_dispatch(
+    model, "sharded-gpt-j-6B", device_map="auto", no_split_module_classes=["GPTJBlock"],  load_in_8bit=True
+)
+tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 model.eval()
+
+# name = "facebook/opt-30b"
+# model = AutoModelForCausalLM.from_pretrained(name, device_map="auto", load_in_8bit=True)
+# tokenizer = AutoTokenizer.from_pretrained(name)
+# model.eval()
 
 # checkpoint = "facebook/opt-13b"
 # model = AutoModelForCausalLM.from_pretrained(
