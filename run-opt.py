@@ -72,7 +72,7 @@ device_map = {
 # model = load_checkpoint_and_dispatch(
 #     model, "sharded-gpt-j-6B", device_map="auto", no_split_module_classes=["GPTJBlock"]
 # )
-name = "facebook/opt-13b"
+name = "facebook/opt-30b"
 model = AutoModelForCausalLM.from_pretrained(name, device_map="auto", load_in_8bit=True)
 tokenizer = AutoTokenizer.from_pretrained(name)
 model.eval()
