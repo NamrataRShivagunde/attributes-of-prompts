@@ -65,7 +65,7 @@ device_map = {
  'lm_head': 1,
 }
 
-name = "facebook/opt-30b"
+name = "facebook/opt-13b"
 model_8bit = AutoModelForCausalLM.from_pretrained(name, device_map=device_map, load_in_8bit=True)
 tokenizer = AutoTokenizer.from_pretrained(name)
 model_8bit.eval()
