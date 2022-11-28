@@ -62,15 +62,15 @@ device_map = {
 }
 
 
-name = "facebook/opt-30b"
+checkpoint = "facebook/opt-30b"
 model = AutoModelForCausalLM.from_pretrained(
-    'facebook/opt-66b',
+    checkpoint,
     device_map='auto',
     offload_folder='offload_folder',
     torch_dtype=torch.float16,
     offload_state_dict=True,
 )
-tokenizer = AutoTokenizer.from_pretrained(name, return_tensors = "pt")
+tokenizer = AutoTokenizer.from_pretrained(checkpoint, return_tensors = "pt")
 model.eval()
 
 
