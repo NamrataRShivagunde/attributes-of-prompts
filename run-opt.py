@@ -81,6 +81,8 @@ checkpoint = "facebook/opt-13b"
 model = AutoModelForCausalLM.from_pretrained(
     checkpoint, device_map="auto", offload_folder="offload", offload_state_dict = True, torch_dtype=torch.float16
 )
+tokenizer = AutoTokenizer.from_pretrained(checkpoint)
+model.eval()
 
 text = "Premise === Britain said, Friday, that it has barred cleric, Omar Bakri, from returning to the country from Lebanon, where he was released by police after being detained for 24 hours \n Hypothesis === Bakri was briefly detained, but was released \n  Answer === Entailmen \n The current format presents a 'Premise', 'Hypothesis', and an 'Answer'.  How should I present this to OPT so that it is easy for OPT to answer correctly?"
 text2 = "Premise: Britain said, Friday, that it has barred cleric, Omar Bakri, from returning to the country from Lebanon, where he was released by police after being detained for 24 hours \n Hypothesis: Bakri was briefly detained, but was released \n Answer: Entailment. What is meant by entailment and non-entailment task for OPT?"
