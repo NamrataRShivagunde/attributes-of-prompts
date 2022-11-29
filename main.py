@@ -154,6 +154,7 @@ class NLI():
         premise = batch['premise'][idx]
         hypothesis = batch['hypothesis'][idx]
         label_id = batch['label'][idx]
+        print(label_id)
         label_word = (self.label_mapping())[int(label_id)]
         print(label_word)
         
