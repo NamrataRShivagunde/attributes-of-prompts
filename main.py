@@ -85,7 +85,6 @@ class NLI():
                     1: LM_targets[1]}  # no
 
         elif self.task == 'snli':
-            print("hi snli")
             LM_targets = self.targets.split(';')
             self.class_id_to_label = {
                     0: LM_targets[0],  # yes
@@ -94,7 +93,6 @@ class NLI():
                     -1: LM_targets[3]}  # none
         
         else: # mnli anli
-            print("hi mnli")
             LM_targets = self.targets.split(';')
             self.class_id_to_label = {
                     0: LM_targets[0],  # yes
@@ -125,7 +123,6 @@ class NLI():
     def label_mapping(self):
         ''' maps the label word to label id
         '''
-        print(self.task)
         if self.task == 'rte':
             LM_targets = self.targets.split(';')
             self.class_id_to_label = {
@@ -157,10 +154,8 @@ class NLI():
         premise = batch['premise'][idx]
         hypothesis = batch['hypothesis'][idx]
         label_id = batch['label'][idx]
-        print(label_id)
-        print(self.class_id_to_label[-1])
         label_word = (self.label_mapping())[int(label_id)]
-        print(label_word)
+        
         
         example = {'premise':premise,   # query
                     'hypothesis': hypothesis,
@@ -220,7 +215,6 @@ def main():
     random_ints =  random.sample(range(0, len(train_set)), args.num_shots) # from train_set choose n demos randomly
     
     few_shots = []
-    print(temp)
     # apply template to demostrations and add it to few_shots list
     for num in random_ints:
         filled_example = data_cat.apply_template(train_set[num],  temp['demo_template'])
@@ -250,7 +244,6 @@ def main():
             batch_predictions = []
             batch_next_word_predictions = []
             for i in range(len(batch['premise'])):
-                print(data_cat.class_id_to_label)
                 filled_example, label_word = data_cat.process_example(batch, i) # takes the ith query in a batch and add in-context examples and filles the template
                 if prompt != '':
                     filled_example = prompt + "\n" + filled_example # add prompt too if it exists
