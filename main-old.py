@@ -335,3 +335,25 @@ if __name__=='__main__':
             #     prob_mat = torch.cat((prob_mat, prob[target_words[k]]))
             
             # batch_predictions_indices = (prob_mat.argmax(dim=0)).tolist()
+
+   # # batch predictions , get the label word and add to all_predictions
+            # prob = {}
+            # # get log prob for first token of all target words e.g. 'ent' and 'non'
+            # i=0
+            # for target_word in target_words:
+            #     target_work_tok = tokenizer(target_word)
+
+            #     first_id = target_work_tok.input_ids[1]  # pick first input if after </s> and get prob of that
+            #     prob[target_words[i]] = output.logits[:,-1,first_id] # logp of 'ent' and 'non'
+            #     i+=1
+
+            # # prob = {'yes': tensor([17.6786, 17.6786, 17.6786, 17.6786]), 
+            # #         'no': tensor([15.3798, 15.3798, 15.3798, 15.3798])} for batch size 4
+            # print("prob", prob)
+            # for i in range(len(batch['premise'])):
+            #     if prob[target_words[0]][i].item() >= prob[target_words[1]][i].item(): 
+            #         pred = target_words[0]
+            #     else:
+            #         pred = target_words[1]
+            #     batch_predictions.append(pred)
+            # all_predictions.extend(batch_predictions)  

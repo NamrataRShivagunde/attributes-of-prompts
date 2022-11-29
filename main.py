@@ -116,8 +116,8 @@ class NLI():
         if self.task == 'rte':
             LM_targets = self.targets.split(';')
             self.class_id_to_label = {
-                    0: LM_targets[0],  # entailment
-                    1: LM_targets[1]}  # non-entailment
+                    0: LM_targets[0],  # yes
+                    1: LM_targets[1]}  # no
 
         elif self.task == 'snli':
             LM_targets = self.targets.split(';')
@@ -142,8 +142,6 @@ class NLI():
 
             filled_example =   self.apply_template(example, self.query_template)             # single filled query
         return filled_example, label_word
-
-
 
 def main():
     
@@ -229,41 +227,39 @@ def main():
             # output = model(inputs, output_norms=False)
             output = model(inputs)
 
-            # logits gather using torch.gather()
-            print(output.logits.shape)
-            logits = ((output.logits)[:,-1,:]).unsqueeze(1).to("cpu")
-            print(logits.shape)
-            indices = torch.ones(logits.shape[0], 1, len(target_words))
-            indices = indices.type(torch.int64)
-            indices[:,-1,:] = torch.tensor(target_ids) 
-            logit_gathered = torch.gather(logits, 2, indices)
-            choice_id = logit_gathered.argmax(dim=2)[:,-1]
-            for id in choice_id:
-                batch_predictions.append(target_words[id])   
+            prob = {}
+            # get log prob for first token of all target words e.g. 'ent' and 'non'
+            i=0
+            for target_word in target_words:
+                target_work_tok = tokenizer(target_word)
+
+                first_id = target_work_tok.input_ids[1]  # pick first input if after </s> and get prob of that
+                prob[target_words[i]] = output.logits[:,-1,first_id] # logp of 'ent' and 'non'
+                i+=1
+
+            # prob = {'yes': tensor([17.6786, 17.6786, 17.6786, 17.6786]), 
+            #         'no': tensor([15.3798, 15.3798, 15.3798, 15.3798])} for batch size 4
+            print("prob", prob)
+            for i in range(len(batch['premise'])):
+                if prob[target_words[0]][i].item() >= prob[target_words[1]][i].item(): 
+                    pred = target_words[0]
+                else:
+                    pred = target_words[1]
+                batch_predictions.append(pred)
+            all_predictions.extend(batch_predictions)  
+
+            # # logits gather using torch.gather()
+            # logits = ((output.logits)[:,-1,:]).unsqueeze(1).to("cpu")
+
+            # indices = torch.ones(logits.shape[0], 1, len(target_words))
+            # indices = indices.type(torch.int64)
+            # indices[:,-1,:] = torch.tensor(target_ids) 
+            # logit_gathered = torch.gather(logits, 2, indices)
+            # choice_id = logit_gathered.argmax(dim=2)[:,-1]
+            # for id in choice_id:
+            #     batch_predictions.append(target_words[id])   
           
-            all_predictions.extend(batch_predictions)      
-
-            # # batch predictions , get the label word and add to all_predictions
-            # prob = {}
-            # # get log prob for first token of all target words e.g. 'ent' and 'non'
-            # i=0
-            # for target_word in target_words:
-            #     target_work_tok = tokenizer(target_word)
-
-            #     first_id = target_work_tok.input_ids[1]  # pick first input if after </s> and get prob of that
-            #     prob[target_words[i]] = output.logits[:,-1,first_id] # logp of 'ent' and 'non'
-            #     i+=1
-
-            # # prob = {'yes': tensor([17.6786, 17.6786, 17.6786, 17.6786]), 
-            # #         'no': tensor([15.3798, 15.3798, 15.3798, 15.3798])} for batch size 4
-            # print("prob", prob)
-            # for i in range(len(batch['premise'])):
-            #     if prob[target_words[0]][i].item() >= prob[target_words[1]][i].item(): 
-            #         pred = target_words[0]
-            #     else:
-            #         pred = target_words[1]
-            #     batch_predictions.append(pred)
-            # all_predictions.extend(batch_predictions)  
+            # all_predictions.extend(batch_predictions)      
             
         accuracy =  (np.array(all_predictions) == np.array(true_labels)).mean()
         print("Accuracy for ", args.templatename, accuracy)
