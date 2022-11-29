@@ -231,7 +231,7 @@ def main():
 
             # logits gather using torch.gather()
             print(output.logits.shape)
-            logits = (output.logits)[:,-1,:].to("cpu")
+            logits = ((output.logits)[:,-1,:]).unsqueeze(1).to("cpu")
             print(logits.shape)
             indices = torch.ones(logits.shape[0], 1, len(target_words))
             indices = indices.type(torch.int64)
