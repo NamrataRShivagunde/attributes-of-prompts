@@ -94,6 +94,7 @@ class NLI():
                     -1: LM_targets[3]}  # none
         
         else: # mnli anli
+            print("hi mnli")
             LM_targets = self.targets.split(';')
             self.class_id_to_label = {
                     0: LM_targets[0],  # yes
