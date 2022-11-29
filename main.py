@@ -125,6 +125,7 @@ class NLI():
     def label_mapping(self):
         ''' maps the label word to label id
         '''
+        print(self.task)
         if self.task == 'rte':
             LM_targets = self.targets.split(';')
             self.class_id_to_label = {
