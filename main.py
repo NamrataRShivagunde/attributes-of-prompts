@@ -155,6 +155,7 @@ class NLI():
         hypothesis = batch['hypothesis'][idx]
         label_id = batch['label'][idx]
         label_word = (self.label_mapping())[int(label_id)]
+        print(label_word)
         
         example = {'premise':premise,   # query
                     'hypothesis': hypothesis,
