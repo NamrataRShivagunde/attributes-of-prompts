@@ -171,8 +171,8 @@ def main():
 
     # load tokenizer and model
     modelname = args.modelname
-    # model = AutoModelForCausalLM.from_pretrained(modelname,  device_map="auto", load_in_8bit=True).to(args.device)
-    model = AutoModelForCausalLM.from_pretrained(modelname).to(args.device)
+    model = AutoModelForCausalLM.from_pretrained(modelname,  device_map="auto", load_in_8bit=True).to(args.device)
+    # model = AutoModelForCausalLM.from_pretrained(modelname).to(args.device)
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
 
     # get dataset
@@ -254,8 +254,8 @@ def main():
 
             tok_input = tokenizer(proc_batch, return_tensors="pt", padding=True)
             inputs = tok_input['input_ids'].to(args.device)
-            output = model(inputs, output_norms=False)
-            # output = model(inputs)
+            # output = model(inputs, output_norms=False)
+            output = model(inputs)
 
             # logits gather using torch.gather()
             logits = ((output.logits)[:,-1,:]).unsqueeze(1).to("cpu") # [b, 1, vocab] taking last set of logits
