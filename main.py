@@ -231,12 +231,12 @@ def main():
 
             # logits gather using torch.gather()
             print(output.logits.shape)
-            logits = (output.logits)[:,-1,:]
+            logits = (output.logits)[:,-1,:].to("cpu")
             print(logits.shape)
             indices = torch.ones(logits.shape[0], 1, len(target_words))
             indices = indices.type(torch.int64)
             indices[:,-1,:] = torch.tensor(target_ids) 
-            logit_gathered = torch.gather(output.logits, 2, indices)
+            logit_gathered = torch.gather(logits, 2, indices)
             choice_id = logit_gathered.argmax(dim=2)[:,-1]
             for id in choice_id:
                 batch_predictions.append(target_words[id])   
