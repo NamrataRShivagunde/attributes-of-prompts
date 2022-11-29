@@ -246,7 +246,7 @@ def main():
             batch_predictions = []
             batch_next_word_predictions = []
             for i in range(len(batch['premise'])):
-                
+                print(data_cat.class_id_to_label)
                 filled_example, label_word = data_cat.process_example(batch, i) # takes the ith query in a batch and add in-context examples and filles the template
                 if prompt != '':
                     filled_example = prompt + "\n" + filled_example # add prompt too if it exists
