@@ -85,6 +85,7 @@ class NLI():
                     1: LM_targets[1]}  # no
 
         elif self.task == 'snli':
+            print("hi snli")
             LM_targets = self.targets.split(';')
             self.class_id_to_label = {
                     0: LM_targets[0],  # yes
