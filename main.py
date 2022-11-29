@@ -172,8 +172,8 @@ def main():
 
     # load tokenizer and model
     modelname = args.modelname
-    model = AutoModelForCausalLM.from_pretrained(modelname,  device_map="auto", load_in_8bit=True).to(args.device)
-    # model = AutoModelForCausalLM.from_pretrained(modelname).to(args.device)
+    # model = AutoModelForCausalLM.from_pretrained(modelname,  device_map="auto", load_in_8bit=True).to(args.device)
+    model = AutoModelForCausalLM.from_pretrained(modelname).to(args.device)
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
 
     # get dataset
@@ -228,6 +228,7 @@ def main():
     # iterate over val set and apply tempalte and add prompt to each query
     dev_dataloader = DataLoader(dev_set, batch_size=args.batch_size, shuffle=False)
 
+    # some initalization
     target_words = temp['targets'].split(';')
     target_ids = []
     true_labels = []
@@ -237,34 +238,31 @@ def main():
     for i in range(len(target_words)):
         target_ids.append(target_encoded['input_ids'][i][1])  # [10932,  12516, 2362, 39763] for snli
 
+    # evaluation loop
     model.eval()
     with torch.no_grad():
         for i, batch in enumerate(tqdm(dev_dataloader)):
             proc_batch = []
             batch_predictions = []
             batch_next_word_predictions = []
+
             for i in range(len(batch['premise'])):
-                filled_example, label_word = data_cat.process_example(batch, i) # takes the ith query in a batch and add in-context examples and filles the template
+                filled_example, label_word = data_cat.process_example(batch, i) # takes the ith query in a batch and add in-context examples and apply template to it
                 if prompt != '':
-                    filled_example = prompt + "\n" + filled_example # add prompt too if it exists
+                    filled_example = prompt + "\n" + filled_example # add instrcution if it exists
             
                 proc_batch.append(filled_example)
                 
                 true_labels.append(label_word) # will be used to compute accuracy
 
-            tok_input = tokenizer(proc_batch, return_tensors="pt", padding=True)
+            tok_input = tokenizer(proc_batch, padding=True, return_tensors="pt")
             inputs = tok_input['input_ids'].to(args.device)
-            # output = model(inputs, output_norms=False)
-            output = model(inputs)
+            output = model(inputs, output_norms=False)
+            # output = model(inputs)
 
             # logits gather using torch.gather()
             logits = ((output.logits)[:,-1,:]).unsqueeze(1).to("cpu") # [b, 1, vocab] taking last set of logits
-
-            # next word prediction
-            for j in range(len(batch['premise'])):
-                batch_next_word_predictions.append(tokenizer.decode(logits[j,-1,:].argmax(dim=0)))
     
-
             # P(y/x) where y are labels
             indices = torch.ones(logits.shape[0], 1, len(target_words)) # [b, 1, len(targetwords)]
             indices = indices.type(torch.int64)
@@ -274,6 +272,10 @@ def main():
             for id in choice_id:
                 batch_predictions.append(target_words[id])   
           
+            # next word prediction
+            for j in range(len(batch['premise'])):
+                batch_next_word_predictions.append(tokenizer.decode(logits[j,-1,:].argmax(dim=0)))
+
             all_predictions.extend(batch_predictions)      
             all_next_word_predictions.extend(batch_next_word_predictions)
 
