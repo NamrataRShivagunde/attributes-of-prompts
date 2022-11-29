@@ -200,7 +200,8 @@ def main():
                 true_labels.append(label_word) # will be used to compute accuracy
 
             tok_input = tokenizer(proc_batch, return_tensors="pt", padding=True)
-            output = model(tok_input['input_ids'], output_norms=False)
+            inputs = tok_input['input_ids'].to(args.device)
+            output = model(inputs, output_norms=False)
             
             # batch predictions , get the label word and add to all_predictions
             prob = {}
