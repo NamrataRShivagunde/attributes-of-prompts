@@ -226,8 +226,8 @@ def main():
 
             tok_input = tokenizer(proc_batch, return_tensors="pt", padding=True)
             inputs = tok_input['input_ids'].to(args.device)
-            output = model(inputs, output_norms=False)
-            # output = model(inputs)
+            # output = model(inputs, output_norms=False)
+            output = model(inputs)
 
             # logits gather using torch.gather()
             print(output.logits.shape)
