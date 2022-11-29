@@ -72,8 +72,8 @@ def get_arguments():
 @dataclass
 class NLI():
     def __init__(self, temp):
-        # dataset
-      
+        ''' temp (dict) : it contains all column from the template csv file
+        '''
         self.targets = temp['targets'] # "yes;no"
         self.task = temp['task'] # "rte"
         self.query_template = temp['query_template']
@@ -91,9 +91,17 @@ class NLI():
                     1: LM_targets[1],  # neutral
                     2: LM_targets[2],  # no
                     -1: LM_targets[3]}  # none
+        
+        else: # mnli anli
+            LM_targets = self.targets.split(';')
+            self.class_id_to_label = {
+                    0: LM_targets[0],  # yes
+                    1: LM_targets[1],  # neutral
+                    2: LM_targets[2],  # no
+            }
     
     def apply_template(self, example, template):
-        ''' get the example apply template on it. 
+        ''' get the example and apply template on it. 
             example = {premise:..., hypothesis:..., label: 0}
             template =  "Premise:{premise} Hypothesis:{hypothesis} label:{label}"
         '''
@@ -113,6 +121,8 @@ class NLI():
         return example_filled
 
     def label_mapping(self):
+        ''' maps the label word to label id
+        '''
         if self.task == 'rte':
             LM_targets = self.targets.split(';')
             self.class_id_to_label = {
@@ -127,20 +137,31 @@ class NLI():
                     2: LM_targets[2],  # no
                     -1: LM_targets[3]}  # none
         
+        else: # mnli anli
+            LM_targets = self.targets.split(';')
+            self.class_id_to_label = {
+                    0: LM_targets[0],  # yes
+                    1: LM_targets[1],  # neutral
+                    2: LM_targets[2],  # no
+            }
+        
         return self.class_id_to_label
     
-    def process_batch(self, batch):
-        for j in range(len(batch['premise'])):
-            premise = batch['premise'][j]
-            hypothesis = batch['hypothesis'][j]
-            label_id = batch['label'][j]
-            label_word = (self.label_mapping())[int(label_id)]
-            
-            example = {'premise':premise,   # query
-                        'hypothesis': hypothesis,
-                        'label': label_id}
+    def process_example(self, batch, idx):
+        ''' take a query and apply template to it
+        '''
+       
+        premise = batch['premise'][idx]
+        hypothesis = batch['hypothesis'][idx]
+        label_id = batch['label'][idx]
+        label_word = (self.label_mapping())[int(label_id)]
+        
+        example = {'premise':premise,   # query
+                    'hypothesis': hypothesis,
+                    'label': label_id}
 
-            filled_example =   self.apply_template(example, self.query_template)             # single filled query
+        filled_example =   self.apply_template(example, self.query_template)             # single filled query
+        
         return filled_example, label_word
 
 def main():
@@ -161,6 +182,12 @@ def main():
     elif args.datasetname == "snli":
         train_set = datasets.load_dataset(args.datasetname, split='train') # to get few shot in-context examples
         dev_set = datasets.load_dataset(args.datasetname, split='validation') # to evaluate 
+    elif args.datasetname == "mnli":
+        train_set = datasets.load_dataset('glue', args.datasetname, split='train') # to get few shot in-context examples
+        dev_set = datasets.load_dataset('glue', args.datasetname, split='validation_matched') # to evaluate 
+    elif args.datasetname == "anli":
+        train_set = datasets.load_dataset(args.datasetname, split='train_r1') # to get few shot in-context examples
+        dev_set = datasets.load_dataset(args.datasetname, split='dev_r1') # to evaluate
 
     # get template
     temp = {}
@@ -176,7 +203,7 @@ def main():
                 temp['targets'] = row['targets'] # label names
     
     # initialize class
-    if args.datasetname == "rte" or "snli":
+    if args.datasetname == "rte" or "snli" or "mnli" or "anli":
         data_cat = NLI(temp)
 
     # create prompt (instrcutions + in-context exmaples with templates)
@@ -204,6 +231,7 @@ def main():
     target_ids = []
     true_labels = []
     all_predictions = []
+    all_next_word_predictions = []
     target_encoded = tokenizer(target_words) # {'input_ids': [[2, 10932], [2, 12516], [2, 2362], [2, 39763]], 'attention_mask': [[1, 1], [1, 1], [1, 1], [1, 1]]} 4 for snli
     for i in range(len(target_words)):
         target_ids.append(target_encoded['input_ids'][i][1])  # [10932,  12516, 2362, 39763] for snli
@@ -213,56 +241,47 @@ def main():
         for i, batch in enumerate(tqdm(dev_dataloader)):
             proc_batch = []
             batch_predictions = []
-            for _ in range(len(batch['premise'])):
-                filled_example, label_word = data_cat.process_batch(batch) # takes the batch and add in-context examples and filles the template
+            batch_next_word_predictions = []
+            for i in range(len(batch['premise'])):
+                
+                filled_example, label_word = data_cat.process_example(batch, i) # takes the ith query in a batch and add in-context examples and filles the template
                 if prompt != '':
                     filled_example = prompt + "\n" + filled_example # add prompt too if it exists
-               
+            
                 proc_batch.append(filled_example)
                 
                 true_labels.append(label_word) # will be used to compute accuracy
 
             tok_input = tokenizer(proc_batch, return_tensors="pt", padding=True)
             inputs = tok_input['input_ids'].to(args.device)
-            # output = model(inputs, output_norms=False)
-            output = model(inputs)
+            output = model(inputs, output_norms=False)
+            # output = model(inputs)
 
-            prob = {}
-            # get log prob for first token of all target words e.g. 'ent' and 'non'
-            i=0
-            for target_word in target_words:
-                target_work_tok = tokenizer(target_word)
+            # logits gather using torch.gather()
+            logits = ((output.logits)[:,-1,:]).unsqueeze(1).to("cpu") # [b, 1, vocab] taking last set of logits
 
-                first_id = target_work_tok.input_ids[1]  # pick first input if after </s> and get prob of that
-                prob[target_words[i]] = output.logits[:,-1,first_id] # logp of 'ent' and 'non'
-                i+=1
+            # next word prediction
+            for j in range(len(batch['premise'])):
+                batch_next_word_predictions.append(tokenizer.decode(logits[j,-1,:].argmax(dim=0)))
+    
 
-            # prob = {'yes': tensor([17.6786, 17.6786, 17.6786, 17.6786]), 
-            #         'no': tensor([15.3798, 15.3798, 15.3798, 15.3798])} for batch size 4
-            print("prob", prob)
-            for i in range(len(batch['premise'])):
-                if prob[target_words[0]][i].item() >= prob[target_words[1]][i].item(): 
-                    pred = target_words[0]
-                else:
-                    pred = target_words[1]
-                batch_predictions.append(pred)
-            all_predictions.extend(batch_predictions)  
-
-            # # logits gather using torch.gather()
-            # logits = ((output.logits)[:,-1,:]).unsqueeze(1).to("cpu")
-
-            # indices = torch.ones(logits.shape[0], 1, len(target_words))
-            # indices = indices.type(torch.int64)
-            # indices[:,-1,:] = torch.tensor(target_ids) 
-            # logit_gathered = torch.gather(logits, 2, indices)
-            # choice_id = logit_gathered.argmax(dim=2)[:,-1]
-            # for id in choice_id:
-            #     batch_predictions.append(target_words[id])   
+            # P(y/x) where y are labels
+            indices = torch.ones(logits.shape[0], 1, len(target_words)) # [b, 1, len(targetwords)]
+            indices = indices.type(torch.int64)
+            indices[:,-1,:] = torch.tensor(target_ids) 
+            choice_id = torch.gather(logits, 2, indices)
+            choice_id = choice_id.argmax(dim=2)[:,-1] # [b, 1]
+            for id in choice_id:
+                batch_predictions.append(target_words[id])   
           
-            # all_predictions.extend(batch_predictions)      
-            
+            all_predictions.extend(batch_predictions)      
+            all_next_word_predictions.extend(batch_next_word_predictions)
+
         accuracy =  (np.array(all_predictions) == np.array(true_labels)).mean()
         print("Accuracy for ", args.templatename, accuracy)
+
+        accuracy_nextword =  (np.array(all_next_word_predictions) == np.array(true_labels)).mean()
+        print("Accuracy for correct next word prediction ", args.templatename, accuracy_nextword)
 
 if __name__=='__main__':
         main()
