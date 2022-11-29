@@ -201,7 +201,8 @@ def main():
 
             tok_input = tokenizer(proc_batch, return_tensors="pt", padding=True)
             inputs = tok_input['input_ids'].to(args.device)
-            output = model(inputs, output_norms=False)
+            # output = model(inputs, output_norms=False)
+            output = model(inputs)
             
             # batch predictions , get the label word and add to all_predictions
             prob = {}
