@@ -200,14 +200,15 @@ def main():
     with open('templatescsv.csv') as p_file:
         reader = csv.DictReader(p_file)
         for row in reader:
-            if row['template_name'] == args.templatename:
-                temp['task'] = row['task']
-                temp['templatename'] = row['template_name']
-                temp['instruction'] = row['instruction']
-                temp['demo_template'] = row['template-demo']
-                temp['query_template'] = row['template-query'] # this is same as demo_tempalte without the label placeholder
-                temp['targets'] = row['targets'] # label names
-    
+            if row['task'] == args.datasetname:
+                if row['template_name'] == args.templatename:
+                    temp['task'] = row['task']
+                    temp['templatename'] = row['template_name']
+                    temp['instruction'] = row['instruction']
+                    temp['demo_template'] = row['template-demo']
+                    temp['query_template'] = row['template-query'] # this is same as demo_tempalte without the label placeholder
+                    temp['targets'] = row['targets'] # label names
+        
     # initialize class
     if args.datasetname == "rte" or "snli" or "mnli" or "anli":
         data_cat = NLI(temp)
