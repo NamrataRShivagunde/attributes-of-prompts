@@ -201,7 +201,7 @@ def main():
     with torch.no_grad():
         for i in tqdm(range(len(dev_set))):
             example = dev_set[i]
-            print(example)
+           
             filled_example, label_word = data_cat.process_example(example)
             if prompt != '':
                 filled_example = prompt + "\n" + filled_example # add instrcution if it exists
