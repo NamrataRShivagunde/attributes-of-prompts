@@ -213,7 +213,7 @@ def main():
             output = model(inputs)
 
             # gather and compare logits of labels
-            logits = output.logits[:,-1,:].squeeze() # [1, s, v] --> [1,v] --->[v]
+            logits = output.logits[:,-1,:].squeeze().cpu() # [1, s, v] --> [1,v] --->[v]
             indices = torch.tensor(target_ids) # [len(target_ids)]
 
             choice_id = torch.gather(logits, 0, indices) # [len(target_id)]
