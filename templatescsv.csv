@@ -1,5 +1,5 @@
 task,template_name,instruction,template-demo,template-query,targets
-rte,gpt3-style,,Context: {premise} Question: {hypothesis} True or False? {label},Context:{premise}\nQuestion:{hypothesis}True or False?,True;False
+rte,gpt3-style,,{premise}\nquestion: {hypothesis} True or False?\nanswer: {label},Context:{premise}\nQuestion:{hypothesis}True or False?,True;False
 rte,base,,{premise} {hypothesis} {label},{premise} {hypothesis},yes;no
 rte,yesno,,Premise:{premise}\nHypothesis:{hypothesis}\nLabel:{label},Premise:{premise}\nHypothesis:{hypothesis}\nLabel:,yes;no
 rte,yesno_vs,Hypothesis entails Premise?,Premise:{premise}\nHypothesis:{hypothesis}\nLabel:{label},Premise:{premise}\nHypothesis:{hypothesis}\nLabel:,yes;no
