@@ -2,4 +2,4 @@ transformers
 torch
 datasets
 accelerate
--e ../emnlp2020/transformers
+# -e ../emnlp2020/transformers
