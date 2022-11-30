@@ -142,8 +142,8 @@ def main():
 
     # load tokenizer and model
     modelname = args.modelname
-    model = AutoModelForCausalLM.from_pretrained(modelname,  device_map="auto", load_in_8bit=True).to(args.device)
-    # model = AutoModelForCausalLM.from_pretrained(modelname).to(args.device)
+    # model = AutoModelForCausalLM.from_pretrained(modelname,  device_map="auto", load_in_8bit=True).to(args.device)
+    model = AutoModelForCausalLM.from_pretrained(modelname).to(args.device)
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
 
     # get dataset
@@ -201,13 +201,14 @@ def main():
     with torch.no_grad():
         for i in tqdm(range(len(dev_set))):
             example = dev_set[i]
+            print(example)
             filled_example, label_word = data_cat.process_example(example)
             if prompt != '':
-                    filled_example = prompt + "\n" + filled_example # add instrcution if it exists
-                    # e.g. filled_example = Context:Dana Reeve, the widow of the actor Christopher Reeve, has died of l
-                    # lung cancer at age 44, according to the Christopher Reeve Foundation.
-                    # \nQuestion:Christopher Reeve had an accident.True or False?
-
+                filled_example = prompt + "\n" + filled_example # add instrcution if it exists
+                # e.g. filled_example = Context:Dana Reeve, the widow of the actor Christopher Reeve, has died of l
+                # lung cancer at age 44, according to the Christopher Reeve Foundation.
+                # \nQuestion:Christopher Reeve had an accident.True or False?
+            # print("------------",filled_example,"-------------")
             tok_input = tokenizer(filled_example, return_tensors="pt")
             inputs = tok_input['input_ids'].to(args.device)
             output = model(inputs)
