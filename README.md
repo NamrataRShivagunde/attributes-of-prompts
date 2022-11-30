@@ -10,4 +10,4 @@ Install the libraries by using
 
 run 
         python main.py [DATASETNAME] [TEMPLATENAME] [MODELNAME]
-        python main.py rte base facebook/opt-13b
+        python main.py rte base facebook/opt-125m

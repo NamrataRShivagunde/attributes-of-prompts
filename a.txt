@@ -1,0 +1,40 @@
+BEFORE----------- 
+{'premise': ['Swansea striker Lee Trundle has negotiated a lucrative image-rights deal with the League One club.', 
+'A light blue 1975 Ford Escort GL once owned by Pope John Paul II sold for $690,000 Saturday to a Houston multimillionaire who said he plans to put it in a museum he wants to build in his hometown.', 
+'On October 1 2001, EU and other countries introduced the option for domestic animal owners to apply for Pet passports under the Pets Travel Scheme (PETS for short), for pets returning from abroad to the United Kingdom. This replaced the old system of 6 months compulsory quarantine for all domestic pets.', 
+"Kozlowski and the company's former chief financial officer, Mark Swartz, were sentenced, on Monday, to up to 25 years in prison."], 
+
+'hypothesis': ['Lee Trundle is in business with the League One club.', 
+"A Houston multimillionaire buys the Pope's Ford Escort.", 
+'In 2001, the EU introduced a passport for pets.', 
+'Kozlowski was sentenced, Monday, to serve up to 25 years in prison.'], '
+
+idx': tensor([272, 273, 274, 275]), '
+
+label': tensor([0, 0, 0, 0])}
+
+PROMPT------- Hypothesis entails Premise?
+Premise:In any case, the fact that this week Michael Melvill, a 63-year-old civilian pilot, guided a tiny rocket-ship more than 100 kilometres above the Earth and then glided it safely back to Earth, is a cause for celebration.\nHypothesis:Michael Melvill guided more than 100 rocket-ships above the Earth.\nLabel:no
+Premise:France is the only country with two fully governmental elections. Parliamentary elections in France, when they create a new parliamentary majority, lead to a new government.\nHypothesis:Parliamentary elections may lead to a new government in France.\nLabel:yes
+Premise:Tilda Swinton has a prominent role as the White Witch in "The Chronicles of Narnia: The Lion, The Witch and The Wardrobe", coming out in December.\nHypothesis:Tilda Swinton plays the part of the White Witch.\nLabel:yes
+Premise:Over a course of days, the bank went from apparent strength to bankruptcy. Barings was Britain's oldest merchant bank. It had financed the Napoleonic wars, the Louisiana purchase, and the Erie Canal. Barings was the Queen's bank.\nHypothesis:Barings was Britain's oldest merchant bank.\nLabel:yes
+
+
+AFTER----------- 
+['Hypothesis entails Premise?\n
+Premise:In any case, the fact that this week Michael Melvill, a 63-year-old civilian pilot, guided a tiny rocket-ship more than 100 kilometres above the Earth and then glided it safely back to Earth, is a cause for celebration.\\nHypothesis:Michael Melvill guided more than 100 rocket-ships above the Earth.\\nLabel:no\n
+Premise:France is the only country with two fully governmental elections. Parliamentary elections in France, when they create a new parliamentary majority, lead to a new government.\\nHypothesis:Parliamentary elections may lead to a new government in France.\\nLabel:yes\n
+Premise:Tilda Swinton has a prominent role as the White Witch in "The Chronicles of Narnia: The Lion, The Witch and The Wardrobe", coming out in December.\\nHypothesis:Tilda Swinton plays the part of the White Witch.\\nLabel:yes\n
+Premise:Over a course of days, the bank went from apparent strength to bankruptcy. Barings was Britain\'s oldest merchant bank. It had financed the Napoleonic wars, the Louisiana purchase, and the Erie Canal. Barings was the Queen\'s bank.\\nHypothesis:Barings was Britain\'s oldest merchant bank.\\nLabel:yes\n
+Premise:Swansea striker Lee Trundle has negotiated a lucrative image-rights deal with the League One club.\\n
+Hypothesis:Lee Trundle is in business with the League One club.\\n
+Label:', 
+
+'Hypothesis entails Premise?\nPremise:
+In any case, the fact that this week Michael Melvill, a 63-year-old civilian pilot, guided a tiny rocket-ship more than 100 kilometres above the Earth and then glided it safely back to Earth, is a cause for celebration.\\nHypothesis:Michael Melvill guided more than 100 rocket-ships above the Earth.\\nLabel:no\n
+Premise:France is the only country with two fully governmental elections. Parliamentary elections in France, when they create a new parliamentary majority, lead to a new government.\\nHypothesis:Parliamentary elections may lead to a new government in France.\\nLabel:yes\n
+Premise:Tilda Swinton has a prominent role as the White Witch in "The Chronicles of Narnia: The Lion, The Witch and The Wardrobe", coming out in December.\\nHypothesis:Tilda Swinton plays the part of the White Witch.\\nLabel:yes\n
+Premise:Over a course of days, the bank went from apparent strength to bankruptcy. Barings was Britain\'s oldest merchant bank. It had financed the Napoleonic wars, the Louisiana purchase, and the Erie Canal. Barings was the Queen\'s bank.\\nHypothesis:Barings was Britain\'s oldest merchant bank.\\nLabel:yes\n
+Premise:A light blue 1975 Ford Escort GL once owned by Pope John Paul II sold for $690,000 Saturday to a Houston multimillionaire who said he plans to put it in a museum he wants to build in his hometown.\\nHypothesis:A Houston multimillionaire buys the Pope\'s Ford Escort.\\nLabel:', 
+
+'Hypothesis entails Premise?\n Premise:In any case, the fact that this week Michael Melvill, a 63-year-old civilian pilot, guided a tiny rocket-ship more than 100 kilometres above the Earth and then glided it safely back to Earth, is a cause for celebration.\\nHypothesis:Michael Melvill guided more than 100 rocket-ships above the Earth.\\nLabel:no\nPremise:France is the only country with two fully governmental elections. Parliamentary elections in France, when they create a new parliamentary majority, lead to a new government.\\nHypothesis:Parliamentary elections may lead to a new government in France.\\nLabel:yes\nPremise:Tilda Swinton has a prominent role as the White Witch in "The Chronicles of Narnia: The Lion, The Witch and The Wardrobe", coming out in December.\\nHypothesis:Tilda Swinton plays the part of the White Witch.\\nLabel:yes\nPremise:Over a course of days, the bank went from apparent strength to bankruptcy. Barings was Britain\'s oldest merchant bank. It had financed the Napoleonic wars, the Louisiana purchase, and the Erie Canal. Barings was the Queen\'s bank.\\nHypothesis:Barings was Britain\'s oldest merchant bank.\\nLabel:yes\nPremise:On October 1 2001, EU and other countries introduced the option for domestic animal owners to apply for Pet passports under the Pets Travel Scheme (PETS for short), for pets returning from abroad to the United Kingdom. This replaced the old system of 6 months compulsory quarantine for all domestic pets.\\nHypothesis:In 2001, the EU introduced a passport for pets.\\nLabel:', 'Hypothesis entails Premise?\nPremise:In any case, the fact that this week Michael Melvill, a 63-year-old civilian pilot, guided a tiny rocket-ship more than 100 kilometres above the Earth and then glided it safely back to Earth, is a cause for celebration.\\nHypothesis:Michael Melvill guided more than 100 rocket-ships above the Earth.\\nLabel:no\nPremise:France is the only country with two fully governmental elections. Parliamentary elections in France, when they create a new parliamentary majority, lead to a new government.\\nHypothesis:Parliamentary elections may lead to a new government in France.\\nLabel:yes\nPremise:Tilda Swinton has a prominent role as the White Witch in "The Chronicles of Narnia: The Lion, The Witch and The Wardrobe", coming out in December.\\nHypothesis:Tilda Swinton plays the part of the White Witch.\\nLabel:yes\nPremise:Over a course of days, the bank went from apparent strength to bankruptcy. Barings was Britain\'s oldest merchant bank. It had financed the Napoleonic wars, the Louisiana purchase, and the Erie Canal. Barings was the Queen\'s bank.\\nHypothesis:Barings was Britain\'s oldest merchant bank.\\nLabel:yes\nPremise:Kozlowski and the company\'s former chief financial officer, Mark Swartz, were sentenced, on Monday, to up to 25 years in prison.\\nHypothesis:Kozlowski was sentenced, Monday, to serve up to 25 years in prison.\\nLabel:']
