@@ -212,7 +212,7 @@ def main():
             tok_input = tokenizer(filled_example, return_tensors="pt")
             inputs = tok_input['input_ids'].to(args.device)
             output = model(inputs)
-            print(filled_example)
+           
             # gather and compare logits of labels
             print(output.logits.shape)
             logits = output.logits[:,-1,:].squeeze().cpu() # [1, s, v] --> [1,v] --->[v]
