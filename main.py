@@ -265,7 +265,6 @@ def main():
 
            
             # logits gather using torch.gather()
-            print(output.logits.shape)
             logits = ((output.logits)[:,-1,:]).unsqueeze(1).to("cpu") # [b, 1, vocab] taking last set of logits 
             #TODO take last word logit not the end of the batch len
             #TODO works only for batchsize 1, make it owrk for bigger batch size
