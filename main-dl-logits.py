@@ -262,14 +262,28 @@ def main():
             inputs = tok_input['input_ids'].to(args.device)
             # output = model(inputs, output_norms=False)
             output = model(inputs)
- 
-            logits = output.logits[:,-1,:].squeeze().cpu() # [1, s, v] --> [1,v] --->[v]
-            indices = torch.tensor(target_ids) # [len(target_ids)]
 
-            choice_id = torch.gather(logits, 0, indices) # [len(target_id)]
-            choice_id = choice_id.argmax(dim=0) # [1]
+           
+            # logits gather using torch.gather()
+            logits = ((output.logits)[:,-1,:]).unsqueeze(1).to("cpu") # [b, 1, vocab] taking last set of logits 
+            #TODO take last word logit not the end of the batch len
+            #TODO works only for batchsize 1, make it owrk for bigger batch size
+    
+            # P(y/x) where y are labels
+            indices = torch.ones(logits.shape[0], 1, len(target_ids)) # [b, 1, len(targetwords)]
+            indices = indices.type(torch.int64)
+            indices[:,-1,:] = torch.tensor(target_ids) 
+            choice_id = torch.gather(logits, 2, indices)
+            choice_id = choice_id.argmax(dim=2)[:,-1] # [b, 1]
+            for id in choice_id:
+                batch_predictions.append(target_words[id])   
+          
+            # next word prediction
+            for j in range(len(batch['premise'])):
+                batch_next_word_predictions.append(tokenizer.decode(logits[j,-1,:].argmax(dim=0)))
 
-            all_predictions.append(target_words[choice_id]) 
+            all_predictions.extend(batch_predictions)      
+       
 
         accuracy =  (np.array(all_predictions) == np.array(true_labels)).mean()
         print("Accuracy for ", args.templatename, accuracy)
