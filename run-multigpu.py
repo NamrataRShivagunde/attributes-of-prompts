@@ -37,7 +37,7 @@ def main():
 
     print("STEP2")
     # load model and tokenizer
-    model = AutoModelForCausalLM.from_pretrained(MODELNAME,  device_map="auto", load_in_8bit=True).to(dev0, dev1)
+    model = AutoModelForCausalLM.from_pretrained(MODELNAME,  device_map="auto", load_in_8bit=True)(dev0, dev1)
     ddp_model = DDP(model, device_ids=[device_id])
 
     print("STEP3")
