@@ -172,8 +172,8 @@ def main():
 
     # load tokenizer and model
     modelname = args.modelname
-    # model = AutoModelForCausalLM.from_pretrained(modelname,  device_map="auto", load_in_8bit=True).to(args.device)
-    model = AutoModelForCausalLM.from_pretrained(modelname).to(args.device)
+    model = AutoModelForCausalLM.from_pretrained(modelname,  device_map="auto", load_in_8bit=True).to(args.device)
+    # model = AutoModelForCausalLM.from_pretrained(modelname).to(args.device)
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
 
     # get dataset
