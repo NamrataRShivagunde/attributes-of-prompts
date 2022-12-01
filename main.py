@@ -258,7 +258,7 @@ def main():
 
                 true_labels.append(label_word) # will be used to compute accuracy
 
-            tok_input = tokenizer(proc_batch, return_tensors="pt")
+            tok_input = tokenizer(proc_batch, padding=True, return_tensors="pt")
             inputs = tok_input['input_ids'].to(args.device)
             # output = model(inputs, output_norms=False)
             output = model(inputs)

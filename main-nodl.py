@@ -209,12 +209,12 @@ def main():
                 # lung cancer at age 44, according to the Christopher Reeve Foundation.
                 # \nQuestion:Christopher Reeve had an accident.True or False?
             # print("------------",filled_example,"-------------")
-            tok_input = tokenizer(filled_example, return_tensors="pt")
+            tok_input = tokenizer(filled_example, padding=True, return_tensors="pt")
             inputs = tok_input['input_ids'].to(args.device)
             output = model(inputs)
            
             # gather and compare logits of labels
-            print(output.logits.shape)
+            
             logits = output.logits[:,-1,:].squeeze().cpu() # [1, s, v] --> [1,v] --->[v]
             indices = torch.tensor(target_ids) # [len(target_ids)]
 
