@@ -1,3 +1,15 @@
+'''“node” is a system in your distributed architecture. In lay man’s terms, a single system that has multiple GPUs can be called as a node.
+
+“global rank” is a unique identification number for each node in our architecture.
+
+“local rank” is a unique identification number for processes in each node.
+
+“world” is a union of all of the above which can have multiple nodes where each node spawns multiple processes. (Ideally, one for each GPU)
+
+“world_size” is equal to number of nodes * number of gpus
+'''
+
+
 import  datasets as datasets
 import torch
 from torch.utils import data
@@ -13,8 +25,8 @@ MODELNAME = "facebook/opt-125m"
 MAX_BATCH = 3
 
 def main():
-
-    dist.init_process_group("nccl")
+    print("hi")
+    dist.init_process_group("nccl") # nccl backend for GPU, master node = 0 , world size = total number of gpus (2), rank = range from 0 to k-1
     rank = dist.get_rank()
     print(f"Start running basic DDP example on rank {rank}.")
 
