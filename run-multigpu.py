@@ -4,6 +4,7 @@ from torch.utils import data
 from torch.utils.data import DataLoader
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from torch.nn.parallel import DistributedDataParallel as DDP
+import torch.distributed as dist
 
 BATCH_SIZE_PER_DEVICE = 1
 NUM_GPUS = 2
