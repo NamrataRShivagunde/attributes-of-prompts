@@ -69,7 +69,6 @@ def get_arguments():
     args = parser.parse_args()
     return args
 
-
 @dataclass
 class NLI():
     def __init__(self, temp):
@@ -84,6 +83,22 @@ class NLI():
             self.class_id_to_label = {
                     0: LM_targets[0],  # yes
                     1: LM_targets[1]}  # no
+
+        elif self.task == 'snli':
+            LM_targets = self.targets.split(';')
+            self.class_id_to_label = {
+                    0: LM_targets[0],  # yes
+                    1: LM_targets[1],  # neutral
+                    2: LM_targets[2],  # no
+                    -1: LM_targets[3]}  # none
+        
+        else: # mnli anli
+            LM_targets = self.targets.split(';')
+            self.class_id_to_label = {
+                    0: LM_targets[0],  # yes
+                    1: LM_targets[1],  # neutral
+                    2: LM_targets[2],  # no
+            }
     
     def apply_template(self, example, template):
         ''' get the example and apply template on it. 
@@ -113,16 +128,32 @@ class NLI():
             self.class_id_to_label = {
                     0: LM_targets[0],  # yes
                     1: LM_targets[1]}  # no
+
+        elif self.task == 'snli':
+            LM_targets = self.targets.split(';')
+            self.class_id_to_label = {
+                    0: LM_targets[0],  # yes
+                    1: LM_targets[1],  # neutral
+                    2: LM_targets[2],  # no
+                    -1: LM_targets[3]}  # none
+        
+        else: # mnli anli
+            LM_targets = self.targets.split(';')
+            self.class_id_to_label = {
+                    0: LM_targets[0],  # yes
+                    1: LM_targets[1],  # neutral
+                    2: LM_targets[2],  # no
+            }
         
         return self.class_id_to_label
     
-    def process_example(self, example):
+    def process_example(self, batch, idx):
         ''' take a query and apply template to it
         '''
        
-        premise = example['premise']
-        hypothesis = example['hypothesis']
-        label_id = example['label']
+        premise = batch['premise'][idx]
+        hypothesis = batch['hypothesis'][idx]
+        label_id = batch['label'][idx]
         label_word = (self.label_mapping())[int(label_id)]
         
         
@@ -134,7 +165,6 @@ class NLI():
         
         return filled_example, label_word
 
-
 def main():
     
     # get arguments
@@ -142,14 +172,23 @@ def main():
 
     # load tokenizer and model
     modelname = args.modelname
-    model = AutoModelForCausalLM.from_pretrained(modelname,  device_map="auto", load_in_8bit=True).to(args.device)
-    # model = AutoModelForCausalLM.from_pretrained(modelname).to(args.device)
+    # model = AutoModelForCausalLM.from_pretrained(modelname,  device_map="auto", load_in_8bit=True).to(args.device)
+    model = AutoModelForCausalLM.from_pretrained(modelname).to(args.device)
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
 
     # get dataset
-    
-    train_set = datasets.load_dataset('super_glue', args.datasetname, split='train') # to get few shot in-context examples
-    dev_set = datasets.load_dataset('super_glue', args.datasetname, split='validation') # to evaluate 
+    if args.datasetname == "rte":
+        train_set = datasets.load_dataset('super_glue', args.datasetname, split='train') # to get few shot in-context examples
+        dev_set = datasets.load_dataset('super_glue', args.datasetname, split='validation') # to evaluate 
+    elif args.datasetname == "snli":
+        train_set = datasets.load_dataset(args.datasetname, split='train') # to get few shot in-context examples
+        dev_set = datasets.load_dataset(args.datasetname, split='validation') # to evaluate 
+    elif args.datasetname == "mnli":
+        train_set = datasets.load_dataset('glue', args.datasetname, split='train') # to get few shot in-context examples
+        dev_set = datasets.load_dataset('glue', args.datasetname, split='validation_matched') # to evaluate 
+    elif args.datasetname == "anli":
+        train_set = datasets.load_dataset(args.datasetname, split='train_r1') # to get few shot in-context examples
+        dev_set = datasets.load_dataset(args.datasetname, split='dev_r1') # to evaluate
 
     # get template
     temp = {}
@@ -166,66 +205,90 @@ def main():
                     temp['targets'] = row['targets'] # label names
         
     # initialize class
-    data_cat = NLI(temp)
+    if args.datasetname == "rte" or "snli" or "mnli" or "anli":
+        data_cat = NLI(temp)
 
-    prompt = ''
-    if args.num_shots > 0:
-        # create prompt (instrcutions + in-context exmaples with templates)
-        # choose random n integers
-        seed=args.seed
-        random.seed(seed)
-        random_ints =  random.sample(range(0, len(train_set)), args.num_shots) # from train_set choose n demos randomly
-        
-        few_shots = []
-        # apply template to demostrations and add it to few_shots list
-        for num in random_ints:
-            filled_example = data_cat.apply_template(train_set[num],  temp['demo_template'])
-            few_shots.append(filled_example)  
-        
-        if temp['instruction'] != '':
-            prompt = temp['instruction'] + "\n" + "\n".join(few_shots)
-        else:
-            prompt = "\n".join(few_shots)
+    # create prompt (instrcutions + in-context exmaples with templates)
+    # choose random n integers
+    seed=args.seed
+    random.seed(seed)
+    random_ints =  random.sample(range(0, len(train_set)), args.num_shots) # from train_set choose n demos randomly
     
-    all_predictions = []
-    all_true_labels = []
-    target_ids = []
+    few_shots = []
+    # apply template to demostrations and add it to few_shots list
+    for num in random_ints:
+        filled_example = data_cat.apply_template(train_set[num],  temp['demo_template'])
+        few_shots.append(filled_example)  
+    
+    if temp['instruction'] != '':
+        prompt = temp['instruction'] + "\n" + "\n".join(few_shots)
+    else:
+        prompt = "\n".join(few_shots)
 
+    # iterate over val set and apply tempalte and add prompt to each query
+    dev_dataloader = DataLoader(dev_set, batch_size=args.batch_size, shuffle=False)
+
+    # some initalization
     target_words = temp['targets'].split(';') # e.g. ['True', 'False']
-    target_encoded = tokenizer(target_words)  # e.g. {'input_ids': [[2, 36948], [2, 46659]], 'attention_mask': [[1, 1], [1, 1]]}
+    target_ids = []
+    true_labels = []
+    all_predictions = []
+    target_encoded = tokenizer(target_words) ## e.g. {'input_ids': [[2, 36948], [2, 46659]], 'attention_mask': [[1, 1], [1, 1]]}
     for i in range(len(target_words)):
-        target_ids.append(target_encoded['input_ids'][i][1])  # e.g. [36948, 46659]
+        target_ids.append(target_encoded['input_ids'][i][1])   # e.g. [36948, 46659]
 
-    # evaluation loop 
+    # evaluation loop
     model.eval()
     with torch.no_grad():
-        for i in tqdm(range(len(dev_set))):
-            example = dev_set[i]
-           
-            filled_example, label_word = data_cat.process_example(example)
-            if prompt != '':
-                filled_example = prompt + "\n" + filled_example # add instrcution if it exists
-                # e.g. filled_example = Context:Dana Reeve, the widow of the actor Christopher Reeve, has died of l
-                # lung cancer at age 44, according to the Christopher Reeve Foundation.
-                # \nQuestion:Christopher Reeve had an accident.True or False?
-            # print("------------",filled_example,"-------------")
-            tok_input = tokenizer(filled_example, return_tensors="pt")
+        for i, batch in enumerate(tqdm(dev_dataloader)):
+            proc_batch = []
+            batch_predictions = []
+            batch_next_word_predictions = []
+
+            for i in range(len(batch['premise'])):
+                filled_example, label_word = data_cat.process_example(batch, i) # takes the ith query in a batch and add in-context examples and apply template to it
+                if prompt != '':
+                    filled_example = prompt + "\n" + filled_example # add instrcution if it exists
+
+            # e.g. filled_example = Dana Reeve, the widow of the actor Christopher Reeve, has died of l
+            # lung cancer at age 44, according to the Christopher Reeve Foundation.
+            # \nquestion:Christopher Reeve had an accident.True or False? answer:
+        
+                proc_batch.append(filled_example)
+
+                true_labels.append(label_word) # will be used to compute accuracy
+
+            tok_input = tokenizer(proc_batch, return_tensors="pt")
             inputs = tok_input['input_ids'].to(args.device)
+            # output = model(inputs, output_norms=False)
             output = model(inputs)
 
-            # gather and compare logits of labels
-            logits = output.logits[:,-1,:].squeeze().cpu() # [1, s, v] --> [1,v] --->[v]
-            indices = torch.tensor(target_ids) # [len(target_ids)]
+           
+            # logits gather using torch.gather()
+            print(output.logits.shape)
+            logits = ((output.logits)[:,-1,:]).unsqueeze(1).to("cpu") # [b, 1, vocab] taking last set of logits 
+            #TODO take last word logit not the end of the batch len
+            #TODO works only for batchsize 1, make it owrk for bigger batch size
+    
+            # P(y/x) where y are labels
+            indices = torch.ones(logits.shape[0], 1, len(target_ids)) # [b, 1, len(targetwords)]
+            indices = indices.type(torch.int64)
+            indices[:,-1,:] = torch.tensor(target_ids) 
+            choice_id = torch.gather(logits, 2, indices)
+            choice_id = choice_id.argmax(dim=2)[:,-1] # [b, 1]
+            for id in choice_id:
+                batch_predictions.append(target_words[id])   
+          
+            # next word prediction
+            for j in range(len(batch['premise'])):
+                batch_next_word_predictions.append(tokenizer.decode(logits[j,-1,:].argmax(dim=0)))
 
-            choice_id = torch.gather(logits, 0, indices) # [len(target_id)]
-            choice_id = choice_id.argmax(dim=0) # [1]
+            all_predictions.extend(batch_predictions)      
+       
 
-            all_predictions.append(target_words[choice_id]) 
-            all_true_labels.append(label_word)
-
-
-        accuracy =  (np.array(all_predictions) == np.array(all_true_labels)).mean()
-        print("Accuracy for ", args.datasetname,", ", args.templatename, ", ", accuracy)
+        accuracy =  (np.array(all_predictions) == np.array(true_labels)).mean()
+        print("Accuracy for ", args.templatename, accuracy)
 
 if __name__=='__main__':
         main()
+
