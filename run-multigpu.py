@@ -25,26 +25,32 @@ MODELNAME = "facebook/opt-125m"
 MAX_BATCH = 3
 
 def main():
-    dist.init_process_group("nccl") # nccl backend for GPU, master node = 0 , world size = total number of gpus (2), rank = range from 0 to k-1
-    rank = dist.get_rank()
-    print(rank)
-    print(f"Start running basic DDP example on rank {rank}.")
+    print("STEP1")
+    dist.init_process_group("nccl", rank=0, world_size=2) # nccl backend for GPU, master node = 0 , world size = total number of gpus (2), rank = range from 0 to k-1
+    dev0 = (rank * 2) % world_size
+    dev1 = (rank * 2 + 1) % world_size
 
+    print("STEP2")
     # load model and tokenizer
-    device_id = rank % torch.cuda.device_count()
-    model = AutoModelForCausalLM.from_pretrained(MODELNAME,  device_map="auto", load_in_8bit=True).to(device_id)
+    model = AutoModelForCausalLM.from_pretrained(MODELNAME,  device_map="auto", load_in_8bit=True).to(dev0, dev1)
     ddp_model = DDP(model, device_ids=[device_id])
 
+    print("STEP3")
     tokenizer = AutoTokenizer.from_pretrained(MODELNAME, return_tensors="pt")
 
+    print("STEP4")
     # get dataset
     train_set = datasets.load_dataset('super_glue', DATASETNAME, split='train') # to get few shot in-context examples
 
+    print("STEP5")
     # get dataloader
     ddp_sampler = torch.utils.data.distributed.DistributedSampler(dataset)
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=BATCH_SIZE_PER_DEVICE, sampler=ddp_sampler)
 
+    print("STEP6")
     # evaluation loop
+    for i, batch in enumerate(dataloader):
+        print(batch)
 
 if __name__=='__main__':
         main()
