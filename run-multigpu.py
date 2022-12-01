@@ -23,10 +23,15 @@ NUM_GPUS = 2
 DATASETNAME = "rte"
 MODELNAME = "facebook/opt-125m"
 MAX_BATCH = 3
+RANK=0
+WORLD_SIZE=2
 
 def main():
+    rank=RANK
+    world_size= WORLD_SIZE
     print("STEP1")
-    dist.init_process_group("nccl", rank=0, world_size=2) # nccl backend for GPU, master node = 0 , world size = total number of gpus (2), rank = range from 0 to k-1
+    dist.init_process_group("nccl", rank=rank, world_size=world_size) # nccl backend for GPU, master node = 0 , world size = total number of gpus (2), rank = range from 0 to k-1
+    
     dev0 = (rank * 2) % world_size
     dev1 = (rank * 2 + 1) % world_size
 
