@@ -25,9 +25,9 @@ MODELNAME = "facebook/opt-125m"
 MAX_BATCH = 3
 
 def main():
-    print("hi")
     dist.init_process_group("nccl") # nccl backend for GPU, master node = 0 , world size = total number of gpus (2), rank = range from 0 to k-1
     rank = dist.get_rank()
+    print(rank)
     print(f"Start running basic DDP example on rank {rank}.")
 
     # load model and tokenizer
