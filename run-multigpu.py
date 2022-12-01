@@ -22,7 +22,7 @@ BATCH_SIZE_PER_DEVICE = 1
 NUM_GPUS = 2
 DATASETNAME = "rte"
 MODELNAME = "facebook/opt-125m"
-MAX_BATCH = 3
+MAX_BATCHES = 3
 RANK=0
 WORLD_SIZE=2
 
@@ -31,13 +31,11 @@ def main():
     world_size= WORLD_SIZE
     print("STEP1")
     dist.init_process_group("nccl", rank=rank, world_size=world_size) # nccl backend for GPU, master node = 0 , world size = total number of gpus (2), rank = range from 0 to k-1
-    
-    dev0 = (rank * 2) % world_size
-    dev1 = (rank * 2 + 1) % world_size
+    device = torch.device("cuda", rank)
 
     print("STEP2")
     # load model and tokenizer
-    model = AutoModelForCausalLM.from_pretrained(MODELNAME,  device_map="auto", load_in_8bit=True)(dev0, dev1)
+    model = AutoModelForCausalLM.from_pretrained(MODELNAME,  device_map="auto", load_in_8bit=True).to(device)
     ddp_model = DDP(model, device_ids=[device_id])
 
     print("STEP3")
@@ -54,8 +52,11 @@ def main():
 
     print("STEP6")
     # evaluation loop
-    for i, batch in enumerate(dataloader):
-        print(batch)
+    with torch.no_grad():
+        for i, batch in enumerate(dataloader):
+            if i >= MAX_BATCHES:
+                break
+            print(batch)
 
 if __name__=='__main__':
         main()
