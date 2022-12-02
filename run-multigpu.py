@@ -33,7 +33,7 @@ def main():
             if i >= 2:
                 break
             input = tokenizer(dev_set[i])
-            out = model(input)
+            out = model(input['input_ids'])
             print(dev_set[i])
             print(out.logits.shape)
 
