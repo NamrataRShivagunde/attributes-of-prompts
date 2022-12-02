@@ -19,7 +19,6 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 import torch.distributed as dist
 
 BATCH_SIZE_PER_DEVICE = 1
-NUM_GPUS = 2
 DATASETNAME = "rte"
 MODELNAME = "facebook/opt-125m"
 MAX_BATCHES = 3
@@ -36,7 +35,7 @@ def main():
     print("STEP2")
     # load model and tokenizer
     model = AutoModelForCausalLM.from_pretrained(MODELNAME,  device_map="auto", load_in_8bit=True).to(device)
-    ddp_model = DDP(model, device_ids=[device_id])
+    ddp_model = DDP(model, device_ids=[rank])
 
     print("STEP3")
     tokenizer = AutoTokenizer.from_pretrained(MODELNAME, return_tensors="pt")
