@@ -21,7 +21,7 @@ import torch.distributed as dist
 
 def main():
     modelname= 'facebook/opt-125m'
-    device = "cuda"
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     model = AutoModelForCausalLM.from_pretrained(modelname).to(device)
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
     
@@ -32,10 +32,11 @@ def main():
         for i in range(len(dev_set)):
             if i >= 2:
                 break
-            input = tokenizer(dev_set[i])
-            out = model(input['input_ids'])
-            print(dev_set[i])
-            print(out.logits.shape)
+            tok_input = tokenizer(dev_set[i]['premise'], padding=True, return_tensors="pt")
+            inputs = tok_input['input_ids'].to(device)
+            # output = model(inputs, output_norms=False)
+            output = model(inputs)
+            print(output.logits.shape)
 
 if __name__=='__main__':
         main()
