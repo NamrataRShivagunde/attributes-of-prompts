@@ -30,7 +30,7 @@ def main():
 
     with torch.no_grad():
         for i in range(len(dev_set)):
-            if i >= 2:
+            if i >= 100:
                 break
             tok_input = tokenizer(dev_set[i]['premise'], padding=True, return_tensors="pt")
             inputs = tok_input['input_ids'].to(device)
