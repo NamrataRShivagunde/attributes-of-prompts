@@ -18,44 +18,21 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from torch.nn.parallel import DistributedDataParallel as DDP
 import torch.distributed as dist
 
-BATCH_SIZE_PER_DEVICE = 1
-DATASETNAME = "rte"
-MODELNAME = "facebook/opt-125m"
-MAX_BATCHES = 3
-RANK=0
-WORLD_SIZE=2
 
 def main():
-    rank=RANK
-    world_size= WORLD_SIZE
-    print("STEP1")
-    dist.init_process_group("nccl", rank=rank, world_size=world_size) # nccl backend for GPU, master node = 0 , world size = total number of gpus (2), rank = range from 0 to k-1
-    device = torch.device("cuda", rank)
+    modelname= 'facebook/125m'
+    model = AutoModelForCausalLM.from_pretrained(modelname)
+    tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
+    
+    # data
+    dev_set = datasets.load_dataset('super_glue', 'rte', split='validation') # to get few shot in-context examples
 
-    print("STEP2")
-    # load model and tokenizer
-    model = AutoModelForCausalLM.from_pretrained(MODELNAME,  device_map="auto", load_in_8bit=True).to(device)
-    ddp_model = DDP(model, device_ids=[rank])
-
-    print("STEP3")
-    tokenizer = AutoTokenizer.from_pretrained(MODELNAME, return_tensors="pt")
-
-    print("STEP4")
-    # get dataset
-    train_set = datasets.load_dataset('super_glue', DATASETNAME, split='train') # to get few shot in-context examples
-
-    print("STEP5")
-    # get dataloader
-    ddp_sampler = torch.utils.data.distributed.DistributedSampler(dataset)
-    dataloader = torch.utils.data.DataLoader(dataset, batch_size=BATCH_SIZE_PER_DEVICE, sampler=ddp_sampler)
-
-    print("STEP6")
     # evaluation loop
     with torch.no_grad():
-        for i, batch in enumerate(dataloader):
-            if i >= MAX_BATCHES:
+        for i in range(len(dev_set)):
+            if i >= 2:
                 break
-            print(batch)
+            print(dev_set[i])
 
 if __name__=='__main__':
         main()
