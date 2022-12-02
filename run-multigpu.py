@@ -35,7 +35,7 @@ def main():
         for i in range(len(dev_set)):
             if i >= 2:
                 break
-            out = model(tok_dev_set["iput_ids"])
+            out = model(tok_dev_set["iput_ids"][i])
             print(dev_set[i])
             print(out.logits.shape)
 
