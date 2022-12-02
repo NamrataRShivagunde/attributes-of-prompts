@@ -28,14 +28,12 @@ def main():
     # data
     dev_set = datasets.load_dataset('super_glue', 'rte', split='validation') # to get few shot in-context examples
 
-    tok_dev_set = tokenizer(dev_set)
-
-    # evaluation loop
     with torch.no_grad():
         for i in range(len(dev_set)):
             if i >= 2:
                 break
-            out = model(tok_dev_set["iput_ids"][i])
+            input = tokenizer(dev_set[i])
+            out = model(input)
             print(dev_set[i])
             print(out.logits.shape)
 
