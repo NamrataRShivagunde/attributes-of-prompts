@@ -20,7 +20,7 @@ import torch.distributed as dist
 
 
 def main():
-    modelname= 'facebook/125m'
+    modelname= 'facebook/opt-125m'
     device = "cuda"
     model = AutoModelForCausalLM.from_pretrained(modelname).to(device)
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
