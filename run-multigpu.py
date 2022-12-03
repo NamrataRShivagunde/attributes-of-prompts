@@ -30,11 +30,11 @@ def main():
     dev_dataloader = DataLoader(dev_set, batch_size=4)
 
     with torch.no_grad():
-        for i, batch in enumerate(dev_dataloader()):
+        for i, batch in enumerate(dev_dataloader):
             if i >= 100:
                 break
             for j in range(len(batch['premise'])):
-                tok_input = tokenizer(batch[ji]['premise'], padding=True, return_tensors="pt")
+                tok_input = tokenizer(batch[j]['premise'], padding=True, return_tensors="pt")
                 inputs = tok_input['input_ids'].to(device)
                 # output = model(inputs, output_norms=False)
                 output = model(inputs)
