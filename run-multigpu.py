@@ -34,7 +34,8 @@ def main():
             if i >= 100:
                 break
             for j in range(len(batch['premise'])):
-                tok_input = tokenizer(batch[j]['premise'], padding=True, return_tensors="pt")
+                print(batch)
+                tok_input = tokenizer(batch['premise'][j], padding=True, return_tensors="pt")
                 inputs = tok_input['input_ids'].to(device)
                 # output = model(inputs, output_norms=False)
                 output = model(inputs)
