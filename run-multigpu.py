@@ -27,16 +27,18 @@ def main():
     
     # data
     dev_set = datasets.load_dataset('super_glue', 'rte', split='validation') # to get few shot in-context examples
+    dev_dataloader = DataLoader(dev_set, batch_size=4)
 
     with torch.no_grad():
-        for i in range(len(dev_set)):
+        for i, batch in enumerate(dev_dataloader()):
             if i >= 100:
                 break
-            tok_input = tokenizer(dev_set[i]['premise'], padding=True, return_tensors="pt")
-            inputs = tok_input['input_ids'].to(device)
-            # output = model(inputs, output_norms=False)
-            output = model(inputs)
-            print(output.logits.shape)
+            for j in range(len(batch['premise'])):
+                tok_input = tokenizer(batch[ji]['premise'], padding=True, return_tensors="pt")
+                inputs = tok_input['input_ids'].to(device)
+                # output = model(inputs, output_norms=False)
+                output = model(inputs)
+                print(output.logits.shape)
 
 if __name__=='__main__':
         main()
