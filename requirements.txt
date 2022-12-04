@@ -1,4 +1,4 @@
-transformers
+git+https://github.com/huggingface/transformers.git
 torch
 datasets
 accelerate

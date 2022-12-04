@@ -74,6 +74,6 @@ device_map = {
 model_8bit = AutoModelForCausalLM.from_pretrained(modelname, device_map=device_map, load_in_8bit=True)
 tokenizer = AutoTokenizer.from_pretrained(modelname)
 
-generate_from_model(model_8bit, tokenizer)
+print(generate_from_model(model_8bit, tokenizer))
 
 print(model_8bit.hf_device_map)
