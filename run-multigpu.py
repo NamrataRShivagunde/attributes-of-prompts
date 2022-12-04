@@ -29,7 +29,7 @@ def main():
     
     device_map = infer_auto_device_map(model, no_split_module_classes=["OPTDecoderLayer"],dtype="float16")
 
-    model = AutoModelForCausalLM.from_pretrained('ArthurZ/opt-30b-sharded', device_map=device_map, load_in_8bit=True)
+    model = AutoModelForCausalLM.from_pretrained(modelname, device_map=device_map, load_in_8bit=True)
     #model = load_checkpoint_and_dispatch(model, modelname, device_map=device_map)
     
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
