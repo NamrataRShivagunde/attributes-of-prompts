@@ -12,22 +12,24 @@
 
 import  datasets as datasets
 import torch
-from torch.utils import data
 from torch.utils.data import DataLoader
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from torch.nn.parallel import DistributedDataParallel as DDP
-import torch.distributed as dist
+from accelerate import Accelerator
+
+accelerator = Accelerator();
 
 
 def main():
     modelname= 'facebook/opt-125m'
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    model = AutoModelForCausalLM.from_pretrained(modelname).to(device)
+    model = AutoModelForCausalLM.from_pretrained(modelname)
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
     
     # data
     dev_set = datasets.load_dataset('super_glue', 'rte', split='validation') # to get few shot in-context examples
     dev_dataloader = DataLoader(dev_set, batch_size=4)
+
+    model, dev_dataloader = accelerator.prepare(model, dev_dataloader)
 
     with torch.no_grad():
         for i, batch in enumerate(dev_dataloader):
