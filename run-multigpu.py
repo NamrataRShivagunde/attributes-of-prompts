@@ -20,8 +20,9 @@ accelerator = Accelerator();
 
 
 def main():
-    modelname= 'facebook/opt-125m'
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    modelname= 'facebook/opt-13b'
+    # device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = accelerator.device
     model = AutoModelForCausalLM.from_pretrained(modelname)
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
     
@@ -33,11 +34,9 @@ def main():
 
     with torch.no_grad():
         for i, batch in enumerate(dev_dataloader):
-            if i >= 100:
-                break
             for j in range(len(batch['premise'])):
                 tok_input = tokenizer(batch['premise'][j], padding=True, return_tensors="pt")
-                inputs = tok_input['input_ids'].to(device)
+                inputs = tok_input['input_ids']
                 # output = model(inputs, output_norms=False)
                 output = model(inputs)
                 print(output.logits.shape)
