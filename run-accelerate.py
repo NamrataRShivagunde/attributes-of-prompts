@@ -1,14 +1,20 @@
 from accelerate import init_empty_weights, load_checkpoint_and_dispatch
-from transformers import AutoConfig, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM
+import torch
 
-checkpoint = "facebook/opt-30b"
-config = AutoConfig.from_pretrained(checkpoint)
+modelname = "facebook/opt-30b"
+text = "Hello my name is"
+max_new_tokens = 20
 
-with init_empty_weights():
-    model = AutoModelForCausalLM.from_config(config)
+def generate_from_model(model, tokenizer):
+  encoded_input = tokenizer(text, return_tensors='pt')
+  output_sequences = model.generate(input_ids=encoded_input['input_ids'].cuda())
+  return tokenizer.decode(output_sequences[0], skip_special_tokens=True)
 
-model = load_checkpoint_and_dispatch(
-    model, "facebook/opt-30b", device_map="auto", no_split_module_classes=["GPTJBlock"]
-)
 
-print(model.hf_device_map)
+model_8bit = AutoModelForCausalLM.from_pretrained(modelname, device_map="auto", load_in_8bit=True)
+tokenizer = AutoTokenizer.from_pretrained(modelname)
+
+generate_from_model(model_8bit, tokenizer)
+
+print(model_8bit.hf_device_map)
