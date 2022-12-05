@@ -1,4 +1,4 @@
-git+https://github.com/huggingface/transformers.git
+git+https://github.com/NamrataRShivagunde/transformers.git@get-normattentions#egg=transformers
 torch
 datasets
 accelerate
