@@ -6,7 +6,7 @@ modelname = "facebook/opt-30b"
 text = '''Premise=== Britain said, Friday, that it has barred cleric, Omar Bakri, from returning to the country from Lebanon, where he was released by police after being detained for 24 hours.
 Hypothesis=== Bakri was detained for 24 hours and then released.
 Answer=== True.
-The current format presents a 'Premise', 'Hypothesis', and an 'Answer'. Ho wshould I present this to OPT so that it is easy for OPT to answer'''
+The current format presents a 'Premise', 'Hypothesis', and an 'Answer'. How should I present this to OPT so that it is easy for OPT to answer?'''
 
 max_new_tokens = 20
 
