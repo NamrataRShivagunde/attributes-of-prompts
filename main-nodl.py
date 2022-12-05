@@ -239,7 +239,7 @@ def main():
             few_shots.append(filled_example)  
         
         if temp['instruction'] != '':
-            prompt = temp['instruction'] + "\n\n" + "\n\n".join(few_shots) + "\n\n"
+            prompt = temp['instruction'] + "\n" + "\n".join(few_shots) + "\n"
         else:
             prompt = "\n".join(few_shots)
     
@@ -279,7 +279,7 @@ def main():
             choice_id = choice_id.argmax(dim=0) # [1]
 
             # next word prediction
-            nextword_id = logits.argmx(dim=0)
+            nextword_id = logits.argmax(dim=0)
             nextword = tokenizer.decode(nextword_id)
 
             all_predictions.append(target_words[choice_id]) 
@@ -291,7 +291,7 @@ def main():
         print("Accuracy for ", args.datasetname,", ", args.templatename, ", ", accuracy)
 
         nextword_accuracy =  (np.array(all_nextword) == np.array(all_true_labels)).mean()
-        print("Accuracy for ", args.datasetname,", ", args.templatename, ", ", nextword_accuracy)
+        print("Next word Accuracy for ", args.datasetname,", ", args.templatename, ", ", nextword_accuracy)
 
 
 if __name__=='__main__':
