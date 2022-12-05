@@ -12,9 +12,9 @@ text = "How to do define natural language inference task? \n How do you define e
 
 max_new_tokens = 300
 
-def generate_from_model(model, tokenizer):
+def generate_from_model(model, tokenizer, max_new_tokens):
   encoded_input = tokenizer(text, return_tensors='pt')
-  output_sequences = model.generate(input_ids=encoded_input['input_ids'].cuda())
+  output_sequences = model.generate(input_ids=encoded_input['input_ids'].cuda(), max_new_tokens=max_new_tokens)
   return tokenizer.decode(output_sequences[0], skip_special_tokens=True)
 
 # config = AutoConfig.from_pretrained(modelname)
@@ -80,6 +80,6 @@ device_map = {
 model_8bit = AutoModelForCausalLM.from_pretrained(modelname, device_map=device_map, load_in_8bit=True)
 tokenizer = AutoTokenizer.from_pretrained(modelname)
 
-print(generate_from_model(model_8bit, tokenizer))
+print(generate_from_model(model_8bit, tokenizer, max_new_tokens))
 
 print(model_8bit.hf_device_map)
