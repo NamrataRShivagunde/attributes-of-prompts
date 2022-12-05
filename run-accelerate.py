@@ -6,7 +6,7 @@ modelname = "facebook/opt-30b"
 text = '''Premise === Britain said, Friday, that it has barred cleric, Omar Bakri, from returning to the country from Lebanon, where he was released by police after being detained for 24 hours
 Hypothesis === Bakri was briefly detained, but was released
 Answer === Entailment
-The current format presents a 'Premise', 'Hypothesis', and an 'Answer'.  How should I present this to OPT so that it is easy for OPT to answer correctly? '''
+The current format presents a 'Premise', 'Hypothesis', and an 'Answer'. How should I prompt this to OPT so that it is easy for OPT to answer correctly?'''
 
 # text = "How do you define entailment and non-entailement task? What is Premise and Hypothesis?"
 
