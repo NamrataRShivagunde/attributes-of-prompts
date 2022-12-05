@@ -242,6 +242,9 @@ def main():
             prompt = temp['instruction'] + "\n" + "\n".join(few_shots) + "\n"
         else:
             prompt = "\n".join(few_shots) + "\n"
+    
+    if args.num_shots == 0:
+        prompt = temp['instruction']
 
     print(prompt)
     
