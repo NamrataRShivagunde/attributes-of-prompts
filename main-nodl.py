@@ -239,9 +239,11 @@ def main():
             few_shots.append(filled_example)  
         
         if temp['instruction'] != '':
-            prompt = temp['instruction'] + "\n\n" + "\n\n".join(few_shots) + "\n\n"
+            prompt = temp['instruction'] + "\n" + "\n".join(few_shots) + "\n"
         else:
             prompt = "\n".join(few_shots)
+
+    print(prompt)
     
     all_predictions = []
     all_true_labels = []
@@ -281,6 +283,7 @@ def main():
             # next word prediction
             nextword_id = logits.argmax(dim=0)
             nextword = tokenizer.decode(nextword_id)
+            print(nextword)
 
             all_predictions.append(target_words[choice_id]) 
             all_true_labels.append(label_word)
