@@ -286,7 +286,7 @@ def main():
 
             all_predictions.append(target_words[choice_id]) 
             all_true_labels.append(label_word)
-            all_nextword.append(nextword)
+            all_nextword.append(nextword.strip())
 
 
         accuracy =  (np.array(all_predictions) == np.array(all_true_labels)).mean()
