@@ -111,8 +111,8 @@ class NLI():
         if self.task == 'rte':
             LM_targets = self.targets.split(';')
             self.class_id_to_label = {
-                    0: LM_targets[0],  # yes
-                    1: LM_targets[1]}  # no
+                    0: LM_targets[0],  # True
+                    1: LM_targets[1]}  # False
         
         return self.class_id_to_label
     
