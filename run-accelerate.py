@@ -3,12 +3,12 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig
 import torch
 
 modelname = "facebook/opt-30b"
-# text = '''Premise=== Britain said, Friday, that it has barred cleric, Omar Bakri, from returning to the country from Lebanon, where he was released by police after being detained for 24 hours.
-# Hypothesis=== Bakri was detained for 24 hours and then released.
-# Answer=== True.
-# The current format presents a 'Premise', 'Hypothesis', and an 'Answer'. How should I present this to OPT so that it is easy for OPT to answer?'''
+text = '''Premise=== Britain said, Friday, that it has barred cleric, Omar Bakri, from returning to the country from Lebanon, where he was released by police after being detained for 24 hours.
+Hypothesis=== Bakri was detained for 24 hours and then released.
+Answer=== True.
+The current format presents a 'Premise', 'Hypothesis', and an 'Answer'. How should I present this to OPT so that it is easy for OPT to answer?'''
 
-text = "How to do define natural language inference task? \n How do you define entailment and non-entailement task? What is Premise and Hypothesis?"
+# text = "How to do define natural language inference task? \n How do you define entailment and non-entailement task? What is Premise and Hypothesis?"
 
 max_new_tokens = 300
 
@@ -82,4 +82,4 @@ tokenizer = AutoTokenizer.from_pretrained(modelname)
 
 print(generate_from_model(model_8bit, tokenizer, max_new_tokens))
 
-print(model_8bit.hf_device_map)
+#print(model_8bit.hf_device_map)
