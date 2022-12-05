@@ -283,7 +283,6 @@ def main():
             # next word prediction
             nextword_id = logits.argmax(dim=0)
             nextword = tokenizer.decode(nextword_id)
-            print(nextword)
 
             all_predictions.append(target_words[choice_id]) 
             all_true_labels.append(label_word)
