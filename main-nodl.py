@@ -239,12 +239,13 @@ def main():
             few_shots.append(filled_example)  
         
         if temp['instruction'] != '':
-            prompt = temp['instruction'] + "\n" + "\n".join(few_shots)
+            prompt = temp['instruction'] + "\n\n" + "\n\n".join(few_shots)
         else:
             prompt = "\n".join(few_shots)
     
     all_predictions = []
     all_true_labels = []
+    all_nextword = []
     target_ids = []
 
     target_words = temp['targets'].split(';') # e.g. ['True', 'False']
@@ -277,12 +278,21 @@ def main():
             choice_id = torch.gather(logits, 0, indices) # [len(target_id)]
             choice_id = choice_id.argmax(dim=0) # [1]
 
+            # next word prediction
+            nextword_id = logits.argmx(dim=0)
+            nextword = tokenizer.decode(nextword_id)
+
             all_predictions.append(target_words[choice_id]) 
             all_true_labels.append(label_word)
+            all_nextword.append(nextword)
 
 
         accuracy =  (np.array(all_predictions) == np.array(all_true_labels)).mean()
         print("Accuracy for ", args.datasetname,", ", args.templatename, ", ", accuracy)
+
+        nextword_accuracy =  (np.array(all_nextword) == np.array(all_true_labels)).mean()
+        print("Accuracy for ", args.datasetname,", ", args.templatename, ", ", nextword_accuracy)
+
 
 if __name__=='__main__':
         main()
