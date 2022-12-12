@@ -9,8 +9,8 @@ import argparse
 # args = parser.parse_args()
 
 print('tf-s')
-print('shot0')
-os.system('python main-nodl.py rte tf-s-qa facebook/opt-30b --num_shots 0 --seed 25')
+# print('shot0')
+# os.system('python main-nodl.py rte tf-s-qa facebook/opt-30b --num_shots 0 --seed 25')
 print('shot1')
 os.system('python main-nodl.py rte tf-s-qa facebook/opt-30b --num_shots 1 --seed 25')
 print('shot4')
