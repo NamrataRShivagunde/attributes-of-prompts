@@ -6,7 +6,7 @@ import argparse
 # parser.add_argument("--prediction", default=False, type=str)
 
 
-args = parser.parse_args()
+# args = parser.parse_args()
 
 print('tf-s')
 print('shot0')
