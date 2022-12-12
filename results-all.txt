@@ -1,0 +1,166 @@
+Accuracy for rte, tf-m-qa-r, Accuracy for rte, tf-m-qa-r, Accuracy for rte, tf-m-qa-r, 4, 0.6353790613718412
+Accuracy for rte, tf-l-qa-r, 1, 0.5487364620938628
+Accuracy for rte, tf-l-qa-r, 4, 0.6028880866425993
+Accuracy for rte, tf-xl-qa-r, 1, 0.5487364620938628
+Accuracy for rte, tf-xl-qa-r, 4, 0.5812274368231047
+Accuracy for rte, tf-s-qa-f, 1, 0.5667870036101083
+Accuracy for rte, tf-s-qa-f, 1, 0.5667870036101083
+Next word Accuracy for rte, tf-s-qa-f, 1, 0.032490974729241874
+Accuracy for rte, tf-s-qa-f, 4, 0.5848375451263538
+Next word Accuracy for rte, tf-s-qa-f, 4, 0.02888086642599278
+Accuracy for rte, tf-m-qa-f, 1, 0.5703971119133574
+Next word Accuracy for rte, tf-m-qa-f, 1, 0.02888086642599278
+Accuracy for rte, tf-m-qa-f, 4, 0.6028880866425993
+Next word Accuracy for rte, tf-m-qa-f, 4, 0.032490974729241874
+Accuracy for rte, tf-l-qa-f, 1, 0.5703971119133574
+Next word Accuracy for rte, tf-l-qa-f, 1, 0.032490974729241874
+Accuracy for rte, tf-l-qa-f, 4, 0.592057761732852
+Next word Accuracy for rte, tf-l-qa-f, 4, 0.039711191335740074
+Accuracy for rte, tf-xl-qa-f, 1, 0.5523465703971119
+Next word Accuracy for rte, tf-xl-qa-f, 1, 0.02527075812274368
+Accuracy for rte, tf-xl-qa-f, 4, 0.5848375451263538
+Next word Accuracy for rte, tf-xl-qa-f, 4, 0.04332129963898917
+Accuracy for rte, tf-s-qa-inline-r, 0, 0.5451263537906137
+Next word Accuracy for rte, tf-s-qa-inline-r, 0, 0.018050541516245487
+Accuracy for rte, tf-s-qa-inline-r, 1, 0.5956678700361011
+Next word Accuracy for rte, tf-s-qa-inline-r, 1, 0.02888086642599278
+Accuracy for rte, tf-s-qa-inline-r, 4, 0.5667870036101083
+Next word Accuracy for rte, tf-s-qa-inline-r, 4, 0.02888086642599278
+Accuracy for rte, tf-m-qa-inline-r, 0, 0.5415162454873647
+Next word Accuracy for rte, tf-m-qa-inline-r, 0, 0.010830324909747292
+Accuracy for rte, tf-m-qa-inline-r, 1, 0.5703971119133574
+Next word Accuracy for rte, tf-m-qa-inline-r, 1, 0.02527075812274368
+Accuracy for rte, tf-m-qa-inline-r, 4, 0.5740072202166066
+Next word Accuracy for rte, tf-m-qa-inline-r, 4, 0.02888086642599278
+Accuracy for rte, tf-l-qa-inline-r, 0, 0.5342960288808665
+Next word Accuracy for rte, tf-l-qa-inline-r, 0, 0.010830324909747292
+Accuracy for rte, tf-l-qa-inline-r, 1, 0.5812274368231047
+Next word Accuracy for rte, tf-l-qa-inline-r, 1, 0.032490974729241874
+Accuracy for rte, tf-l-qa-inline-r, 4, 0.5487364620938628
+Next word Accuracy for rte, tf-l-qa-inline-r, 4, 0.036101083032490974
+Accuracy for rte, tf-xl-qa-inline-r, 0, 0.51985559566787
+Next word Accuracy for rte, tf-xl-qa-inline-r, 0, 0.01444043321299639
+Accuracy for rte, tf-xl-qa-inline-r, 1, 0.5415162454873647
+Next word Accuracy for rte, tf-xl-qa-inline-r, 1, 0.02888086642599278
+Accuracy for rte, tf-xl-qa-inline-r, 4, 0.5667870036101083
+Next word Accuracy for rte, tf-xl-qa-inline-r, 4, 0.036101083032490974
+Accuracy for rte, tf-s-qa-inline-f, 0, 0.5740072202166066
+Next word Accuracy for rte, tf-s-qa-inline-f, 0, 0.021660649819494584
+Accuracy for rte, tf-s-qa-inline-f, 1, 0.5667870036101083
+Next word Accuracy for rte, tf-s-qa-inline-f, 1, 0.02888086642599278
+Accuracy for rte, tf-s-qa-inline-f, 4, 0.5703971119133574
+Next word Accuracy for rte, tf-s-qa-inline-f, 4, 0.02527075812274368
+Accuracy for rte, tf-m-qa-inline-f, 0, 0.5234657039711191
+Next word Accuracy for rte, tf-m-qa-inline-f, 0, 0.010830324909747292
+Accuracy for rte, tf-m-qa-inline-f, 1, 0.5451263537906137
+Next word Accuracy for rte, tf-m-qa-inline-f, 1, 0.032490974729241874
+Accuracy for rte, tf-m-qa-inline-f, 4, 0.5523465703971119
+Next word Accuracy for rte, tf-m-qa-inline-f, 4, 0.02888086642599278
+Accuracy for rte, tf-l-qa-inline-f, 0, 0.5703971119133574
+Next word Accuracy for rte, tf-l-qa-inline-f, 0, 0.010830324909747292
+Accuracy for rte, tf-l-qa-inline-f, 1, 0.5379061371841155
+Next word Accuracy for rte, tf-l-qa-inline-f, 1, 0.02888086642599278
+Accuracy for rte, tf-l-qa-inline-f, 4, 0.5631768953068592
+Next word Accuracy for rte, tf-l-qa-inline-f, 4, 0.02888086642599278
+Accuracy for rte, tf-xl-qa-inline-f, 0, 0.5848375451263538
+Next word Accuracy for rte, tf-xl-qa-inline-f, 0, 0.010830324909747292
+Accuracy for rte, tf-xl-qa-inline-f, 1, 0.5379061371841155
+Next word Accuracy for rte, tf-xl-qa-inline-f, 1, 0.02527075812274368
+Accuracy for rte, tf-xl-qa-inline-f, 4, 0.5595667870036101
+Next word Accuracy for rte, tf-xl-qa-inline-f, 4, 0.02888086642599278
+Accuracy for rte, tf-s-human, 0, 0.5306859205776173
+Next word Accuracy for rte, tf-s-human, 0, 0.0
+Accuracy for rte, tf-s-human, 1, 0.5379061371841155
+Next word Accuracy for rte, tf-s-human, 1, 0.010830324909747292
+Accuracy for rte, tf-s-human, 4, 0.5270758122743683
+Next word Accuracy for rte, tf-s-human, 4, 0.021660649819494584
+Accuracy for rte, tf-m-human, 0, 0.5270758122743683
+Next word Accuracy for rte, tf-m-human, 0, 0.259927797833935
+Accuracy for rte, tf-m-human, 1, 0.5342960288808665
+Next word Accuracy for rte, tf-m-human, 1, 0.010830324909747292
+Accuracy for rte, tf-m-human, 4, 0.5270758122743683
+Next word Accuracy for rte, tf-m-human, 4, 0.02527075812274368
+Accuracy for rte, tf-l-human, 0, 0.5306859205776173
+Next word Accuracy for rte, tf-l-human, 0, 0.04693140794223827
+Accuracy for rte, tf-l-human, 1, 0.5379061371841155
+Next word Accuracy for rte, tf-l-human, 1, 0.01444043321299639
+Accuracy for rte, tf-l-human, 4, 0.5270758122743683
+Next word Accuracy for rte, tf-l-human, 4, 0.021660649819494584
+Accuracy for rte, tf-xl-human, 0, 0.5342960288808665
+Next word Accuracy for rte, tf-xl-human, 0, 0.10108303249097472
+Accuracy for rte, tf-xl-human, 1, 0.5342960288808665
+Next word Accuracy for rte, tf-xl-human, 1, 0.01444043321299639
+Accuracy for rte, tf-xl-human, 4, 0.5270758122743683
+Next word Accuracy for rte, tf-xl-human, 4, 0.021660649819494584
+Accuracy for rte, tf-s-human-inline, 0, 0.5342960288808665
+Next word Accuracy for rte, tf-s-human-inline, 0, 0.0
+Accuracy for rte, tf-s-human-inline, 1, 0.5703971119133574
+Next word Accuracy for rte, tf-s-human-inline, 1, 0.02888086642599278
+Accuracy for rte, tf-s-human-inline, 4, 0.5306859205776173
+Next word Accuracy for rte, tf-s-human-inline, 4, 0.02888086642599278
+Accuracy for rte, tf-m-human-inline, 0, 0.5342960288808665
+Next word Accuracy for rte, tf-m-human-inline, 0, 0.007220216606498195
+Accuracy for rte, tf-m-human-inline, 1, 0.5270758122743683
+Next word Accuracy for rte, tf-m-human-inline, 1, 0.018050541516245487
+Accuracy for rte, tf-m-human-inline, 4, 0.5270758122743683
+Next word Accuracy for rte, tf-m-human-inline, 4, 0.021660649819494584
+Accuracy for rte, tf-l-human-inline, 0, 0.5270758122743683
+Next word Accuracy for rte, tf-l-human-inline, 0, 0.0
+Accuracy for rte, tf-l-human-inline, 1, 0.5270758122743683
+Next word Accuracy for rte, tf-l-human-inline, 1, 0.018050541516245487
+Accuracy for rte, tf-l-human-inline, 4, 0.5306859205776173
+Next word Accuracy for rte, tf-l-human-inline, 4, 0.018050541516245487
+Accuracy for rte, tf-xl-human-inline, 0, 0.5270758122743683
+Next word Accuracy for rte, tf-xl-human-inline, 0, 0.010830324909747292
+Accuracy for rte, tf-xl-human-inline, 1, 0.5270758122743683
+Next word Accuracy for rte, tf-xl-human-inline, 1, 0.018050541516245487
+Accuracy for rte, tf-xl-human-inline, 4, 0.5342960288808665
+Next word Accuracy for rte, tf-xl-human-inline, 4, 0.018050541516245487
+Accuracy for rte, tf-s, 0, 0.5884476534296029
+Next word Accuracy for rte, tf-s, 0, 0.45126353790613716
+Accuracy for rte, tf-s, 1, 0.5595667870036101
+Next word Accuracy for rte, tf-s, 1, 0.032490974729241874
+Accuracy for rte, tf-s, 4, 0.5776173285198556
+Next word Accuracy for rte, tf-s, 4, 0.06498194945848375
+Accuracy for rte, tf-m, 0, 0.6028880866425993
+Next word Accuracy for rte, tf-m, 0, 0.4548736462093863
+Accuracy for rte, tf-m, 1, 0.5379061371841155
+Next word Accuracy for rte, tf-m, 1, 0.032490974729241874
+Accuracy for rte, tf-m, 4, 0.6028880866425993
+Next word Accuracy for rte, tf-m, 4, 0.24548736462093862
+Accuracy for rte, tf-l, 0, 0.5667870036101083
+Next word Accuracy for rte, tf-l, 0, 0.51985559566787
+Accuracy for rte, tf-l, 1, 0.555956678700361
+Next word Accuracy for rte, tf-l, 1, 0.5523465703971119
+Accuracy for rte, tf-l, 4, 0.5631768953068592
+Next word Accuracy for rte, tf-l, 4, 0.5631768953068592
+Accuracy for rte, tf-xl, 0, 0.5415162454873647
+Next word Accuracy for rte, tf-xl, 0, 0.26714801444043323
+Accuracy for rte, tf-xl, 1, 0.5595667870036101
+Next word Accuracy for rte, tf-xl, 1, 0.2851985559566787
+Accuracy for rte, tf-xl, 4, 0.5776173285198556
+Next word Accuracy for rte, tf-xl, 4, 0.5992779783393501
+Accuracy for rte, tf-s-inline, 0, 0.555956678700361
+Next word Accuracy for rte, tf-s-inline, 0, 0.21299638989169675
+Accuracy for rte, tf-s-inline, 1, 0.5667870036101083
+Next word Accuracy for rte, tf-s-inline, 1, 0.021660649819494584
+Accuracy for rte, tf-s-inline, 4, 0.5631768953068592
+Next word Accuracy for rte, tf-s-inline, 4, 0.02527075812274368
+Accuracy for rte, tf-m-inline, 0, 0.5523465703971119
+Next word Accuracy for rte, tf-m-inline, 0, 0.06859205776173286
+Accuracy for rte, tf-m-inline, 1, 0.5595667870036101
+Next word Accuracy for rte, tf-m-inline, 1, 0.018050541516245487
+Accuracy for rte, tf-m-inline, 4, 0.5523465703971119
+Next word Accuracy for rte, tf-m-inline, 4, 0.061371841155234655
+Accuracy for rte, tf-l-inline, 0, 0.5487364620938628
+Next word Accuracy for rte, tf-l-inline, 0, 0.12274368231046931
+Accuracy for rte, tf-l-inline, 1, 0.5415162454873647
+Next word Accuracy for rte, tf-l-inline, 1, 0.555956678700361
+Accuracy for rte, tf-l-inline, 4, 0.5451263537906137
+Next word Accuracy for rte, tf-l-inline, 4, 0.555956678700361
+Accuracy for rte, tf-xl-inline, 0, 0.5523465703971119
+Next word Accuracy for rte, tf-xl-inline, 0, 0.3898916967509025
+Accuracy for rte, tf-xl-inline, 1, 0.5487364620938628
+Next word Accuracy for rte, tf-xl-inline, 1, 0.555956678700361
+Accuracy for rte, tf-xl-inline, 4, 0.5631768953068592
+Next word Accuracy for rte, tf-xl-inline, 4, 0.5776173285198556
