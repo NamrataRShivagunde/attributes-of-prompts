@@ -1,9 +1,9 @@
 import os
 import argparse
 
-parser = argparse.ArgumentParser()
-parser.add_argument("datasetpath", default=None, type=str)
-parser.add_argument("--prediction", default=False, type=str)
+# parser = argparse.ArgumentParser()
+# parser.add_argument("datasetpath", default=None, type=str)
+# parser.add_argument("--prediction", default=False, type=str)
 
 
 args = parser.parse_args()
