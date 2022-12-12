@@ -29,12 +29,12 @@ import argparse
 # print('######################################')
 
 
-print('tf-xl random')
-print('tf-xl shot1')
-os.system('python main-nodl.py rte tf-xl-qa-r facebook/opt-30b --num_shots 1 --seed 25')
-print(' tf-xl shot4')
-os.system('python main-nodl.py rte tf-xl-qa-r facebook/opt-30b --num_shots 4 --seed 25')
-print('######################################')
+# print('tf-xl random')
+# print('tf-xl shot1')
+# os.system('python main-nodl.py rte tf-xl-qa-r facebook/opt-30b --num_shots 1 --seed 25')
+# print(' tf-xl shot4')
+# os.system('python main-nodl.py rte tf-xl-qa-r facebook/opt-30b --num_shots 4 --seed 25')
+# print('######################################')
 
 ######################################################################################
 #frequent
