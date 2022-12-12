@@ -239,7 +239,8 @@ def main():
             few_shots.append(filled_example)  
         
         if temp['instruction'] != '':
-            prompt = temp['instruction'] + "\n" + "\n".join(few_shots) + "\n"
+            # prompt = temp['instruction'] + "\n" + "\n".join(few_shots) + "\n" # before
+            prompt =  "\n".join(few_shots) + "\n" + temp['instruction'] + "\n" # After 
         else:
             prompt = "\n".join(few_shots) + "\n"
     
