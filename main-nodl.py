@@ -274,8 +274,8 @@ def main():
             # print("------------",filled_example,"-------------")
             tok_input = tokenizer(filled_example, padding=True, return_tensors="pt")
             inputs = tok_input['input_ids'].to("cuda")
-            output = model(inputs, output_norms=True)
-            print(output.norm_attentions.shape)
+            output = model(inputs)
+            # print(output.norm_attentions.shape)
             # gather and compare logits of labels
             
             logits = output.logits[:,-1,:].squeeze().cpu() # [1, s, v] --> [1,v] --->[v]
