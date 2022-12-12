@@ -17,16 +17,16 @@ import argparse
 # print('tf-m')
 # print('tf-m shot1')
 # os.system('python main-nodl.py rte tf-m-qa-r facebook/opt-30b --num_shots 1 --seed 25')
-print(' tf-m shot4')
-os.system('python main-nodl.py rte tf-m-qa-r facebook/opt-30b --num_shots 4 --seed 25')
-print('######################################')
+# print(' tf-m shot4')
+# os.system('python main-nodl.py rte tf-m-qa-r facebook/opt-30b --num_shots 4 --seed 25')
+# print('######################################')
 
-print('tf-l random')
-print('tf-l shot1')
-os.system('python main-nodl.py rte tf-l-qa-r facebook/opt-30b --num_shots 1 --seed 25')
-print(' tf-l shot4')
-os.system('python main-nodl.py rte tf-l-qa-r facebook/opt-30b --num_shots 4 --seed 25')
-print('######################################')
+# print('tf-l random')
+# print('tf-l shot1')
+# os.system('python main-nodl.py rte tf-l-qa-r facebook/opt-30b --num_shots 1 --seed 25')
+# print(' tf-l shot4')
+# os.system('python main-nodl.py rte tf-l-qa-r facebook/opt-30b --num_shots 4 --seed 25')
+# print('######################################')
 
 
 print('tf-xl random')
@@ -144,4 +144,171 @@ print('tf-xl shot1')
 os.system('python main-nodl.py rte tf-xl-qa-inline-f facebook/opt-30b --num_shots 1 --seed 25')
 print(' tf-xl shot4')
 os.system('python main-nodl.py rte tf-xl-qa-inline-f facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+
+
+#########################################################
+print('AFTER Human')
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-s-human facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-s-human facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-s-human facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+print('inline Human')
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-m-human facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-m-human facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-m-human facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+print('inline Human')
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-l-human facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-l-human facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-l-human facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+print('inline Human')
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-xl-human facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-xl-human facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-xl-human facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+#########################################################
+print('Inline Human')
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-s-human-inline facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-s-human-inline facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-s-human-inline facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+print('inline Human')
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-m-human-inline facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-m-human-inline facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-m-human-inline facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+print('inline Human')
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-l-human-inline facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-l-human-inline facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-l-human-inline facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+print('inline Human')
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-xl-human-inline facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-xl-human-inline facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-xl-human-inline facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+
+##########################
+#########################################################
+print('AFTER normal')
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-s facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-s facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-s facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-m facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-m facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-m facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-l facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-l facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-l facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-xl facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-xl facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-xl facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+
+#########################################################
+print('Inline normal')
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-s-inline facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-s-inline facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-s-inline facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-m-inline facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-m-inline facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-m-inline facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-l-inline facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-l-inline facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-l-inline facebook/opt-30b --num_shots 4 --seed 25')
+print('######################################')
+
+
+print('shot0 ')
+os.system('python main-nodl.py rte tf-xl-inline facebook/opt-30b --num_shots 0 --seed 25')
+print('shot1 random')
+os.system('python main-nodl.py rte tf-xl-inline facebook/opt-30b --num_shots 1 --seed 25')
+print('shot4 random')
+os.system('python main-nodl.py rte tf-xl-inline facebook/opt-30b --num_shots 4 --seed 25')
 print('######################################')
