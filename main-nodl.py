@@ -299,6 +299,11 @@ def main():
         nextword_accuracy =  (np.array(all_nextword) == np.array(all_true_labels)).mean()
         print("Next word Accuracy for ", args.datasetname,", ", args.templatename, ", ", nextword_accuracy)
 
+        file = open('results-all.txt', 'a')
+        file.write("Accuracy for ", args.datasetname,", ", args.templatename, ", ", args.num_shots, ", ", accuracy, "\n")
+        file.write("Next word Accuracy for ", args.datasetname,", ", args.templatename, ", ", args.num_shots, ", ", nextword_accuracy, "\n")
+
+
 
 if __name__=='__main__':
         main()
