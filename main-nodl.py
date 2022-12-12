@@ -300,8 +300,8 @@ def main():
         print("Next word Accuracy for ", args.datasetname,", ", args.templatename, ", ", nextword_accuracy)
 
         file = open('results-all.txt', 'a')
-        file.writelines(["Accuracy for ", args.datasetname,", ", args.templatename, ", ", args.num_shots, ", ", accuracy, "\n"])
-        file.write(["Next word Accuracy for ", args.datasetname,", ", args.templatename, ", ", args.num_shots, ", ", nextword_accuracy, "\n"])
+        file.writelines(["Accuracy for ", args.datasetname,", ", args.templatename, ", ", str(args.num_shots), ", ", str(accuracy), "\n"])
+        file.write(["Next word Accuracy for ", args.datasetname,", ", args.templatename, ", ", str(args.num_shots), ", ", str(nextword_accuracy), "\n"])
 
 
 
