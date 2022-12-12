@@ -14,9 +14,9 @@ import argparse
 # os.system('python main-nodl.py rte tf-s-qa-r facebook/opt-30b --num_shots 4 --seed 25')
 # print('######################################')
 
-print('tf-m')
-print('tf-m shot1')
-os.system('python main-nodl.py rte tf-m-qa-r facebook/opt-30b --num_shots 1 --seed 25')
+# print('tf-m')
+# print('tf-m shot1')
+# os.system('python main-nodl.py rte tf-m-qa-r facebook/opt-30b --num_shots 1 --seed 25')
 print(' tf-m shot4')
 os.system('python main-nodl.py rte tf-m-qa-r facebook/opt-30b --num_shots 4 --seed 25')
 print('######################################')
