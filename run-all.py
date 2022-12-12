@@ -8,11 +8,11 @@ import argparse
 
 # args = parser.parse_args()
 ##################random######################
-print('shot1 random')
-os.system('python main-nodl.py rte tf-s-qa-r facebook/opt-30b --num_shots 1 --seed 25')
-print('shot4 random')
-os.system('python main-nodl.py rte tf-s-qa-r facebook/opt-30b --num_shots 4 --seed 25')
-print('######################################')
+# print('shot1 random')
+# os.system('python main-nodl.py rte tf-s-qa-r facebook/opt-30b --num_shots 1 --seed 25')
+# print('shot4 random')
+# os.system('python main-nodl.py rte tf-s-qa-r facebook/opt-30b --num_shots 4 --seed 25')
+# print('######################################')
 
 print('tf-m')
 print('tf-m shot1')
