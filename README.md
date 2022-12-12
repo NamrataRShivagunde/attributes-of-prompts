@@ -10,4 +10,4 @@ Install the libraries by using
 
 run 
         python main.py [DATASETNAME] [TEMPLATENAME] [MODELNAME]
-        python main.py rte base facebook/opt-125m
+        python gpt3.py rte base --seed 25 --num_shots 0 --key 
