@@ -12,7 +12,7 @@ def main():
     model = AutoModelForCausalLM.from_pretrained(modelname,  device_map="auto", load_in_8bit=True)
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
 
-    text = "HI there"
+    text = "HI ther how are you"
     model_input = tokenizer(text,  return_tensors="pt").to("cuda")
     print(model_input)
     output = model(**model_input, output_norms=False)
