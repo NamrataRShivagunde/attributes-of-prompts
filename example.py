@@ -13,7 +13,7 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
 
     text = "HI there"
-    model_input = tokenizer(text)
+    model_input = tokenizer(text,  return_tensors="pt")
     output = model(model_input.to("cuda"), output_norm=True)
     print(output)
 
