@@ -16,7 +16,7 @@ def main():
     model_input = tokenizer(text,  return_tensors="pt").to("cuda")
     print(model_input)
     output = model(**model_input, output_norms=True)
-    print(output.norm_attentions)
+    print(len(output.norm_attentions))
 
 if __name__=='__main__':
         main()
