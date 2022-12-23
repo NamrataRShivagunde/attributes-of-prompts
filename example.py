@@ -15,6 +15,7 @@ def main():
     text = "HI there"
     model_input = tokenizer(text)
     output = model(model_input.to("cuda"), output_norm=True)
+    print(output)
 
 if __name__=='__main__':
         main()
