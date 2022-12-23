@@ -13,9 +13,9 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
 
     text = "HI there"
-    model_input = tokenizer(text,  return_tensors="pt")
+    model_input = tokenizer(text,  return_tensors="pt").to("cuda")
     print(model_input)
-    output = model(model_input["input_ids"].to("cuda"), output_norms=True)
+    output = model(**model_input, output_norms=True)
     print(output)
 
 if __name__=='__main__':
