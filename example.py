@@ -8,15 +8,13 @@ accelerator = Accelerator()
 
 
 def main():
-    modelname= 'facebook/opt-13b'
-    # device = "cuda" if torch.cuda.is_available() else "cpu"
-    # device = accelerator.device
-    config = AutoConfig.from_pretrained(modelname)
-    with init_empty_weights():
-        model = AutoModelForCausalLM.from_config(config)
-    
-    device_map = infer_auto_device_map(model, no_split_module_classes=["OPTDecoderLayer"],dtype="float16")
-    print(device_map)
+    modelname= 'facebook/opt-125m'
+    model = AutoModelForCausalLM.from_pretrained(modelname,  device_map="auto", load_in_8bit=True)
+    tokenizer = AutoTokenizer.from_pretrained(modelname, return_tensors="pt")
+
+    text = "HI there"
+    model_input = tokenizer(text)
+    output = model(model_input.to("cuda"), output_norm=True)
 
 if __name__=='__main__':
         main()

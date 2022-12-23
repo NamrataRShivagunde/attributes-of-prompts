@@ -59,13 +59,13 @@ def get_arguments():
         type=int,
         )
     
-    parser.add_argument(
-        "--key",
-        default=0,
-        help="openai key for prompting gpt3",
-        type=str,
-        )
     # parser.add_argument(
+    #     "--key",
+    #     default=0,
+    #     help="openai key for prompting gpt3",
+    #     type=str,
+    #     )
+    # # parser.add_argument(
     #     "--random",
     #     action='store_true', # flag if examples must be chosen randomy or not
     #     help="Boolean value suggesting if the in-context exampl should be chosen randomlly or not, True if random",
@@ -181,7 +181,7 @@ def main():
             few_shots.append(filled_example)  
         
         if temp['instruction'] != '':
-            prompt = temp['instruction'] + "\n" + "\n".join(few_shots) + "\n"
+            prompt = temp['instruction'] + "\n" + "\n".join(few_shots) + "\n" # Before
         else:
             prompt = "\n".join(few_shots) + "\n"
     
