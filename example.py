@@ -14,7 +14,7 @@ def main():
 
     text = "HI there"
     model_input = tokenizer(text,  return_tensors="pt")
-    output = model(model_input.to("cuda"), output_norm=True)
+    output = model(model_input.to("cuda"), output_norms=True)
     print(output)
 
 if __name__=='__main__':
